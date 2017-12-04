@@ -24,6 +24,7 @@ using Wind.Comm.Expo4;
 using System.Diagnostics;
 using Microsoft.Win32;
 using TimeSync;
+using ImgServer.Net;
 
 namespace ImgServer
 {
@@ -158,6 +159,8 @@ namespace ImgServer
         private SimplePassiveAppServer _server = null;
         private Point _webControlPoint;
 
+        private Thread _serverIPRefreshThread = null;
+
         #region 键盘和鼠标操作函数，从系统库中导入
 
         private readonly int MOUSEEVENTF_LEFTDOWN = 0x0002;//模拟鼠标移动
@@ -211,9 +214,13 @@ namespace ImgServer
             LoadCodeFontLib();
 
             _threadStop = false;
+            //创建获取价格的线程并启动
             _priceCapThread = new Thread(CapPriceThreadProc);
             _priceCapThread.Start(this);
+            //创建获取当前进程连接8300端口的TCP连接的服务器信息，计划每秒获取一次
 
+            _serverIPRefreshThread = new Thread(GetServerIP);
+            _serverIPRefreshThread.Start(1000);  //参数为1000毫秒
 
             this.dtAutoBid.Value = MyDateTime.GetDefaultBidTime();
             this.dtAutoCommit1.Value = MyDateTime.GetDefaultCommitTime1();
@@ -828,6 +835,34 @@ namespace ImgServer
 
         }
 
+        private void UpdateTCPServerInfo(object tcpInfo)
+        {
+            tbServerIPInfo.Text = (string)tcpInfo;
+        }
+
+        private void GetServerIP(Object stateObj)
+        {
+            string ipInfo = ""; 
+            while (true)
+            {
+                if (_threadStop) return;
+                string serverInfo = TCPConnHelper.getTCPServerInfo(8300);
+                if (!serverInfo.Equals(ipInfo, StringComparison.OrdinalIgnoreCase))
+                {
+                    ipInfo = serverInfo;
+                    if (serverInfo.Length == 0)
+                    {
+                        this._SyncContext.Post(UpdateTCPServerInfo, "无");
+                    }
+                    else
+                    {
+                        this._SyncContext.Post(UpdateTCPServerInfo, ipInfo);
+                    }
+                }                
+                Thread.Sleep(1000);
+            }
+        }
+
         public static void CapPriceThreadProc(Object stateObj)
         {
             ImgMainForm mainForm = (ImgMainForm)stateObj;
@@ -856,6 +891,7 @@ namespace ImgServer
             {
                 this._server.Stop();
             }
+            _serverIPRefreshThread.Join();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -1643,6 +1679,11 @@ namespace ImgServer
         {
             Thread timerThread = new Thread(SyncSystemTimeThreadProc);
             timerThread.Start(this);
+        }
+
+        private void btChangeServer_Click(object sender, EventArgs e)
+        {
+            TCPConnHelper.disconnect8300();
         }
 
     }

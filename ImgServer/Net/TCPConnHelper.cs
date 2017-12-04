@@ -76,10 +76,10 @@ namespace ImgServer.Net
     public struct MIB_TCPROW
     {
         public MibTcpState state;
-        public uint localAddr;
-        public uint localPort;
-        public uint remoteAddr;
-        public uint remotePort;
+        public int localAddr;
+        public int localPort;
+        public int remoteAddr;
+        public int remotePort;
     }
 
     /// <summary> 
@@ -189,18 +189,44 @@ namespace ImgServer.Net
         #region 系统API函数导入
         [DllImport("iphlpapi.dll", CharSet = CharSet.Auto, SetLastError = true)] 
         private static extern uint GetExtendedTcpTable(IntPtr pTcpTable, ref int pdwSize, 
-            bool bOrder, int ulAf, TcpTableClass tableClass, uint reserved ); 
+            bool bOrder, int ulAf, TcpTableClass tableClass, uint reserved );
+
+        [DllImport("iphlpapi.dll")]
+        private static extern int GetTcpTable(IntPtr pTcpTable, ref int pdwSize, bool bOrder);
+
 
         [DllImport("iphlpapi.dll", CharSet = CharSet.Auto, SetLastError = true)] 
         private static extern uint GetExtendedUdpTable(IntPtr pUdpTable, ref int pdwSize, 
             bool bOrder, int ulAf, UdpTableClass tableClass, uint reserved );
 
         [DllImport("iphlpapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern uint SetTcpEntry([In] MIB_TCPROW tcpInfo);
+        private static extern int SetTcpEntry([In]IntPtr pTcprow);
 
+        //Convert 16-bit value from network to host byte order 
+        [DllImport("wsock32.dll")]
+        private static extern int ntohs(int netshort);
+
+        //Convert 16-bit value back again 
+        [DllImport("wsock32.dll")]
+        private static extern int htons(int netshort);
+
+        const int FORMAT_MESSAGE_FROM_SYSTEM = 0x1000;
+        const int FORMAT_MESSAGE_IGNORE_INSERTS = 0x200;
+        [DllImport("Kernel32.dll")]
+        private static extern int FormatMessage(uint dwFlags, IntPtr lpSource, uint dwMessageId, uint dwLanguageId,
+        [Out]StringBuilder lpBuffer, uint nSize, IntPtr arguments);
         #endregion
 
-
+        private static IntPtr GetPtrFromTCPROW(MIB_TCPROW obj)
+        {
+            IntPtr ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(obj));
+            Marshal.StructureToPtr(obj, ptr, false);
+            return ptr;
+        }
+        private static void ReleasePtrForTCPROW(IntPtr ptr)
+        {
+            Marshal.FreeCoTaskMem(ptr);
+        }
 
         /// <summary> 
         /// This function reads and parses the active TCP socket connections available 
@@ -359,6 +385,139 @@ namespace ImgServer.Net
             }
             return udpTableRecords != null ? udpTableRecords.Distinct()
                 .ToList<UdpProcessRecord>() : new List<UdpProcessRecord>();
-        } 
+        }
+
+        public static string getTCPServerInfo(ushort serverPort)
+        {
+            string serverInfo = "";
+            List<TcpProcessRecord> tcpClientList = GetAllTcpConnections();
+            foreach (TcpProcessRecord tcpRecord in tcpClientList)
+            {
+                if (tcpRecord.RemotePort == serverPort)
+                {
+                    serverInfo = tcpRecord.RemoteAddress + ":" + Convert.ToString(tcpRecord.RemotePort);
+                    //Console.WriteLine(serverInfo);
+                    break;
+                }
+            }
+            return serverInfo;
+        }
+
+        private static uint IpToInt(string ip)
+        {
+            char[] separator = new char[] { '.' };
+            string[] items = ip.Split(separator);
+            long v= long.Parse(items[0]) << 24
+                    | long.Parse(items[1]) << 16
+                    | long.Parse(items[2]) << 8
+                    | long.Parse(items[3]);
+            return Convert.ToUInt32(v);
+        }
+
+        //The function that fills the MIB_TCPROW array with connectioninfos 
+        private static MIB_TCPROW[] getTcpTable()
+        {
+            IntPtr buffer = IntPtr.Zero; bool allocated = false;
+            try
+            {
+                int iBytes = 0;
+                GetTcpTable(IntPtr.Zero, ref iBytes, false); //Getting size of return data 
+                buffer = Marshal.AllocCoTaskMem(iBytes); //allocating the datasize 
+
+                allocated = true;
+
+                GetTcpTable(buffer, ref iBytes, false); //Run it again to fill the memory with the data 
+
+                int structCount = Marshal.ReadInt32(buffer); // Get the number of structures 
+
+                IntPtr buffSubPointer = buffer; //Making a pointer that will point into the buffer 
+                buffSubPointer = (IntPtr)((int)buffer + 4); //Move to the first data (ignoring dwNumEntries from the original MIB_TCPTABLE struct) 
+
+                MIB_TCPROW[] tcpRows = new MIB_TCPROW[structCount]; //Declaring the array 
+
+                //Get the struct size 
+                MIB_TCPROW tmp = new MIB_TCPROW();
+                int sizeOfTCPROW = Marshal.SizeOf(tmp);
+
+                //Fill the array 1 by 1 
+                for (int i = 0; i < structCount; i++)
+                {
+                    tcpRows[i] = (MIB_TCPROW)Marshal.PtrToStructure(buffSubPointer, typeof(MIB_TCPROW)); //copy struct data 
+                    buffSubPointer = (IntPtr)((int)buffSubPointer + sizeOfTCPROW); //move to next structdata 
+                }
+
+                return tcpRows;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getTcpTable failed! [" + ex.GetType().ToString() + "," + ex.Message + "]");
+            }
+            finally
+            {
+                if (allocated) Marshal.FreeCoTaskMem(buffer); //Free the allocated memory 
+            }
+        }
+
+        public static void CloseRemotePort(int port)
+        {
+            MIB_TCPROW[] rows = getTcpTable();
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (port == ntohs(rows[i].remotePort))
+                {
+                    MIB_TCPROW tcpRecord = rows[i];
+                    tcpRecord.state = MibTcpState.DELETE_TCB;
+                    IntPtr ptr = GetPtrFromTCPROW(tcpRecord);
+                    //Console.WriteLine(String.Format("localaddr:{0},localport:{1},remoteaddr:{2},remoteport:{3}",
+                    //    tcpRecord.localAddr, tcpRecord.localPort, tcpRecord.remoteAddr, tcpRecord.remotePort));
+                    int ret = SetTcpEntry(ptr);
+                    ReleasePtrForTCPROW(ptr);
+                    if (ret != 0)
+                    {
+                        uint dwFlags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS;
+                        StringBuilder lpBuffer = new StringBuilder(260);    //声明StringBuilder的初始大小
+                        int count = FormatMessage(dwFlags, IntPtr.Zero, 1439, 0, lpBuffer, 260, IntPtr.Zero);
+                        Console.WriteLine("disconnect fail, ret = " + ret + " info:" + lpBuffer.ToString());
+                    }
+
+                }
+            }
+        }
+
+        public static void disconnect8300()
+        {
+
+            List<TcpProcessRecord> tcpClientList = GetAllTcpConnections();
+            foreach (TcpProcessRecord tcpRecord in tcpClientList)
+            {
+                if (tcpRecord.RemotePort == 8300)
+                {
+                    MIB_TCPROW connToDelete = new MIB_TCPROW();
+                    connToDelete.state = MibTcpState.DELETE_TCB;
+                    connToDelete.localAddr = (int)tcpRecord.LocalAddress.Address;
+                    connToDelete.localPort = htons(tcpRecord.LocalPort);
+                    connToDelete.remoteAddr = (int)tcpRecord.RemoteAddress.Address;
+                    connToDelete.remotePort = htons(tcpRecord.RemotePort);
+                    IntPtr tcprowPtr = GetPtrFromTCPROW(connToDelete);
+                    int ret = SetTcpEntry(tcprowPtr);
+                    ReleasePtrForTCPROW(tcprowPtr);
+                    if (ret != 0)
+                    {
+                        uint dwFlags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS;
+                        StringBuilder lpBuffer = new StringBuilder(260);    //声明StringBuilder的初始大小
+                        int count = FormatMessage(dwFlags, IntPtr.Zero, 1439, 0, lpBuffer, 260, IntPtr.Zero);
+                        Console.WriteLine("disconnect fail, ret = " + ret + " info:" + lpBuffer.ToString());
+                    }
+                    //Console.WriteLine(String.Format("localaddr:{0},localport:{1},remoteaddr:{2},remoteport:{3}",
+                    //    connToDelete.localAddr, connToDelete.localPort, connToDelete.remoteAddr, connToDelete.remotePort));
+
+                    break;
+                }
+            }
+
+        }
+
+
     }
 }

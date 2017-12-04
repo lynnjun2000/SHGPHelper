@@ -169,6 +169,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.WebControlLocationtimer = new System.Windows.Forms.Timer(this.components);
+            this.tbServerIPInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btChangeServer = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -255,6 +257,7 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.btChangeServer);
             this.splitContainer3.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer3.Panel2.Controls.Add(this.webBrowser1);
             this.splitContainer3.Size = new System.Drawing.Size(940, 862);
@@ -315,7 +318,8 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tbWebStatus,
             this.webLoadProgressBar1,
-            this.lbServerIP});
+            this.lbServerIP,
+            this.tbServerIPInfo});
             this.statusStrip1.Location = new System.Drawing.Point(0, 802);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(940, 22);
@@ -1622,6 +1626,23 @@
             // 
             this.WebControlLocationtimer.Tick += new System.EventHandler(this.WebControlLocationtimer_Tick);
             // 
+            // tbServerIPInfo
+            // 
+            this.tbServerIPInfo.Name = "tbServerIPInfo";
+            this.tbServerIPInfo.Size = new System.Drawing.Size(83, 17);
+            this.tbServerIPInfo.Text = "serverip:port";
+            // 
+            // btChangeServer
+            // 
+            this.btChangeServer.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btChangeServer.Location = new System.Drawing.Point(457, 802);
+            this.btChangeServer.Name = "btChangeServer";
+            this.btChangeServer.Size = new System.Drawing.Size(87, 23);
+            this.btChangeServer.TabIndex = 2;
+            this.btChangeServer.Text = "切换服务器";
+            this.btChangeServer.UseVisualStyleBackColor = true;
+            this.btChangeServer.Click += new System.EventHandler(this.btChangeServer_Click);
+            // 
             // ImgMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -1824,6 +1845,8 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Timer WebControlLocationtimer;
         private System.Windows.Forms.Button btSyncTime;
+        private System.Windows.Forms.ToolStripStatusLabel tbServerIPInfo;
+        private System.Windows.Forms.Button btChangeServer;
 
     }
 }
