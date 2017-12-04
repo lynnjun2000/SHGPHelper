@@ -29,7 +29,7 @@ using ImgServer.Net;
 namespace ImgServer
 {
 
-    public partial class ImgMainForm : Form
+    public partial class ImgMainForm : Form, IInfomationControl
     {
         private class SyncStateData
         {
@@ -161,6 +161,8 @@ namespace ImgServer
 
         private Thread _serverIPRefreshThread = null;
 
+        private UserAdmin _teamAdmin = null;
+
         #region 键盘和鼠标操作函数，从系统库中导入
 
         private readonly int MOUSEEVENTF_LEFTDOWN = 0x0002;//模拟鼠标移动
@@ -232,7 +234,11 @@ namespace ImgServer
 
             //Console.WriteLine("本地侦听端口："+nodes.Default.LocalPort);
             //Console.WriteLine("相邻节点信息："+nodes.Default.OtherNode);
+            _teamAdmin = new UserAdmin();
             startExpoServer();
+            _teamAdmin.bind(this, _server);
+
+            
         }
 
         public void SetDebugInfo(string info)
@@ -246,6 +252,7 @@ namespace ImgServer
             _server = new SimplePassiveAppServer();
             _server.LogHandler += new OnLogInfo(OnLogInfo);
             OriMsgProcessor msgProcessor = new OriMsgProcessor(_server,this);
+            msgProcessor.BroadcastMessageHandler += new ProcessBroadcastMessageHandler(_teamAdmin.OnBroadcastMessage);
             msgProcessor.LogHandler += new OnLogInfo(OnLogInfo);
             //_server.BusMessageProcessHandler += new OnProcessBusMessage(msgProcessor.OnProcessBusMessage);
             _server.BusMessageProcessHandler += new OnProcessBusMessage(msgProcessor.OnProcessBusMessage);
@@ -259,10 +266,12 @@ namespace ImgServer
             private IPassiveAppServer _intf;
             private ImgMainForm _mainForm;
             public OnLogInfo LogHandler { get; set; }
+            public virtual ProcessBroadcastMessageHandler BroadcastMessageHandler { get; set; }  
             public OriMsgProcessor(IPassiveAppServer intf, ImgMainForm mainForm)
             {
                 this._intf = intf;
                 this._mainForm = mainForm;
+                BroadcastMessageHandler = null;
             }
 
             //Message msg, out bool continueProcess
@@ -280,9 +289,13 @@ namespace ImgServer
                 }
                 #endregion
 
-                #region 屏蔽所有全网广播
+                #region 屏蔽所有全网广播,全网广播委托给UserAdmin进行处理，主要处理聊天和各用户的策略信息
                 if (msg.Header.DeliverType == PacketHeader.ExpoDeliverType.Broadcast)
                 {
+                    if (BroadcastMessageHandler != null)
+                    {
+                        BroadcastMessageHandler(msg);
+                    }
                     continueProcess = false;
                     return;
                 }
@@ -1677,14 +1690,30 @@ namespace ImgServer
 
         private void btSyncTime_Click(object sender, EventArgs e)
         {
-            Thread timerThread = new Thread(SyncSystemTimeThreadProc);
-            timerThread.Start(this);
         }
 
-        private void btChangeServer_Click(object sender, EventArgs e)
+        private void btChangeServerIP_ButtonClick(object sender, EventArgs e)
         {
             TCPConnHelper.disconnect8300();
         }
+
+        private void btSyncTimer_ButtonClick(object sender, EventArgs e)
+        {
+            Thread timerThread = new Thread(SyncSystemTimeThreadProc);
+            timerThread.Start(this);
+
+        }
+
+        private void btLogin_Click(object sender, EventArgs e)
+        {
+            if (tbUser.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("用户不能为空，可以为中文，只是用于标识身份","警告");
+            }
+        }
+
+
+
 
     }
 }
