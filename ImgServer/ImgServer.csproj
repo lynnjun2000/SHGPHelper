@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\log4net.dll</HintPath>
+      <HintPath>..\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Wind.Comm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Wind.Comm_CSharpDemo\Libs\Wind.Comm.dll</HintPath>
+      <HintPath>..\lib\Wind.Comm.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -140,15 +140,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ImgGPLib\ImgGPLib.csproj">
       <Project>{87BF0225-A830-4165-B054-A887F478B614}</Project>
       <Name>ImgGPLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AppConfig.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

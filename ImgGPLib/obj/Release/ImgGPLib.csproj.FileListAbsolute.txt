@@ -8,3 +8,8 @@ G:\projects\GP_20170912\ImgGPLib\bin\Release\ImgGPLib.pdb
 G:\projects\GP_20170912\ImgGPLib\obj\Release\ResolveAssemblyReference.cache
 G:\projects\GP_20170912\ImgGPLib\obj\Release\ImgGPLib.dll
 G:\projects\GP_20170912\ImgGPLib\obj\Release\ImgGPLib.pdb
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\bin\Release\ImgGPLib.dll
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\bin\Release\ImgGPLib.pdb
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\obj\Release\ResolveAssemblyReference.cache
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\obj\Release\ImgGPLib.dll
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\obj\Release\ImgGPLib.pdb

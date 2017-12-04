@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgGPLib", "ImgGPLib\ImgGPLib.csproj", "{87BF0225-A830-4165-B054-A887F478B614}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgServer", "ImgServer\ImgServer.csproj", "{E359E954-50F5-4541-9A7F-E3E4B17E7634}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87BF0225-A830-4165-B054-A887F478B614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87BF0225-A830-4165-B054-A887F478B614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87BF0225-A830-4165-B054-A887F478B614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87BF0225-A830-4165-B054-A887F478B614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E359E954-50F5-4541-9A7F-E3E4B17E7634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E359E954-50F5-4541-9A7F-E3E4B17E7634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E359E954-50F5-4541-9A7F-E3E4B17E7634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E359E954-50F5-4541-9A7F-E3E4B17E7634}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

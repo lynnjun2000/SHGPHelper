@@ -13,3 +13,8 @@ G:\projects\GP_20170912\ImgGPLib\bin\Debug\ImgGPLib.pdb
 G:\projects\GP_20170912\ImgGPLib\obj\Debug\ResolveAssemblyReference.cache
 G:\projects\GP_20170912\ImgGPLib\obj\Debug\ImgGPLib.dll
 G:\projects\GP_20170912\ImgGPLib\obj\Debug\ImgGPLib.pdb
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\bin\Debug\ImgGPLib.dll
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\bin\Debug\ImgGPLib.pdb
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\obj\Debug\ResolveAssemblyReference.cache
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\obj\Debug\ImgGPLib.dll
+D:\workres\projects\GitHubGP\SHGPHelper\ImgGPLib\obj\Debug\ImgGPLib.pdb
