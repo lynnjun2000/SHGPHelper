@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- App连接地址配置表 -->
+<configuration>
+    <!-- App应用类型，Active：100～999、Passive：1000～4095 -->
+  <AppClass Value="3100"/>
+    <!--状态汇报时间，单位：秒-->
+  <ReportInterval Value="10"/>
+    <!--模式宣告时间，单位：秒，只有Active类型的应用有意义-->
+  <DeclareInterval Value="1"/>
+    <!-- Broker主机端口 -->
+  <ListenPort Port="9008"/>
+  <!-- Broker主机地址列表 -->
+  <BrokerGroups>
+    <Broker BrokerIp="23.106.155.234" />
+    <!--
+	  <Broker BrokerIp="192.168.1.202" />
+    -->
+  </BrokerGroups>
+    <!-- App核心线程数，默认8 -->
+  <CoreThreadCount Value="2"/>
+    <!-- App处理线程数，默认8 -->
+  <ThreadCount Value="2"/>
+</configuration>

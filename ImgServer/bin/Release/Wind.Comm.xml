@@ -1,0 +1,4469 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Wind.Comm</name>
+    </assembly>
+    <members>
+        <member name="T:Wind.Comm.SimpleProxy">
+            <summary>
+            简单的命令代理及存根类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.DoCommandProxy(System.Object,Wind.Comm.CommandHeader,Wind.Comm.IParameters,Wind.Comm.IParameters@)">
+            <summary>
+            代理执行命令
+            </summary>
+            <param name="sender">发送者</param>
+            <param name="header">命令头</param>
+            <param name="request">请求参数列表</param>
+            <param name="response">响应参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.Broadcast(Wind.Comm.CommandHeader,Wind.Comm.IParameters)">
+            <summary>
+            广播消息
+            </summary>
+            <param name="header">命令头</param>
+            <param name="request">请求</param>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.Broadcast(Wind.Comm.CommandHeader,System.Byte[])">
+            <summary>
+            广播消息
+            </summary>
+            <param name="header">命令头</param>
+            <param name="request">请求</param>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.Multicast(Wind.Comm.CommandHeader,Wind.Comm.IParameters)">
+            <summary>
+            组播消息
+            </summary>
+            <param name="header">命令头</param>
+            <param name="request">请求</param>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.InitInstance(System.String)">
+            <summary>
+            使用配置文件定义实例化单件
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.InitInstance(System.String,System.Int32)">
+            <summary>
+            使用配置文件定义实例化单件
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.InitInstanceByConnection(Wind.Comm.Expo4.AppServer)">
+            <summary>
+            使用已有连接实例定义实例化单件
+            </summary>
+            <param name="connection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.InitInstanceByConnection(Wind.Comm.IAppServer)">
+            <summary>
+            使用已有连接实例定义实例化单件
+            </summary>
+            <param name="connection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleProxy.InitInstanceByConnection(Wind.Comm.Expo4.AppServer,System.Int32)">
+            <summary>
+            使用已有连接实例定义实例化单件
+            </summary>
+            <param name="connection"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Expo4.SkyHeader">
+            <summary>
+            Sky扩展头
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.SkyHeader.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.SkyHeader.CopyFrom(Wind.Comm.Expo4.SkyHeader)">
+            <summary>
+            从一个已知的Sky扩展头中复制信息到当前扩展头
+            </summary>
+            <param name="skyHeader">源扩展头</param>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SkyHeader.SerialNum">
+            <summary>
+            终端消息的流水号，该流水号为终端创建，和总线上的流水号含义不同
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SkyHeader.SourceSocketHandle">
+            <summary>
+            终端在Sky上的连接句柄
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SkyHeader.SourceUserId">
+            <summary>
+            终端的用户ID，为内部UserID
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SkyHeader.DestSocketHandle">
+            <summary>
+            目标的连接句柄，C#中不用
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SkyHeader.DestUserId">
+            <summary>
+            终端要直接发给某个用户的用户ID，在后台系统中不使用
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Serializer">
+            <summary>
+            序列化帮助类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Serializer.DefaultEncoding">
+            <summary>
+            系统默认编码格式为UTF8
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadByte(System.IO.BinaryReader)">
+            <summary>
+            读取一个字节
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>字节</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteByte(System.IO.BinaryWriter,System.Byte)">
+            <summary>
+            写入一个字节
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">字节</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadBool(System.IO.BinaryReader)">
+            <summary>
+            读取布尔值
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteBool(System.IO.BinaryWriter,System.Boolean)">
+            <summary>
+            写入布尔值
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">布尔值</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadBytes(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            读取字节数组
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <param name="count">数组长度</param>
+            <returns>字节数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteBytes(System.IO.BinaryWriter,System.Byte[])">
+            <summary>
+            写入字节数组
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">字节数组</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadUInt16(System.IO.BinaryReader)">
+            <summary>
+            读取UInt16（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>uint16</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteUInt16(System.IO.BinaryWriter,System.UInt16)">
+            <summary>
+            写入UInt16（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">UInt16</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadUInt32(System.IO.BinaryReader)">
+            <summary>
+            读取UInt32（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>uint32</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteUInt32(System.IO.BinaryWriter,System.UInt32)">
+            <summary>
+            写入UInt32（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">UInt32</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadUInt64(System.IO.BinaryReader)">
+            <summary>
+            读取UInt64（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>uint64</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteUInt64(System.IO.BinaryWriter,System.UInt64)">
+            <summary>
+            写入UInt64（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">UInt64</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadInt16(System.IO.BinaryReader)">
+            <summary>
+            读取Int16（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>int16</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteInt16(System.IO.BinaryWriter,System.Int16)">
+            <summary>
+            写入Int16（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">Int16</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadInt32(System.IO.BinaryReader)">
+            <summary>
+            读取Int32（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>int32</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteInt32(System.IO.BinaryWriter,System.Int32)">
+            <summary>
+            写入Int32（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">Int32</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadInt64(System.IO.BinaryReader)">
+            <summary>
+            读取Int64（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>int64</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteInt64(System.IO.BinaryWriter,System.Int64)">
+            <summary>
+            写入Int64（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">Int64</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadSingle(System.IO.BinaryReader)">
+            <summary>
+            读取Single（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>single</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteSingle(System.IO.BinaryWriter,System.Single)">
+            <summary>
+            写入Single（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">Single</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadDouble(System.IO.BinaryReader)">
+            <summary>
+            读取Double（按照网络字节序Big-Endian）
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>double</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteDouble(System.IO.BinaryWriter,System.Double)">
+            <summary>
+            写入（按照网络字节序Big-Endian）
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">Double</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadByteArray(System.IO.BinaryReader)">
+            <summary>
+            读取动态字节数组
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>字节字数</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteByteArray(System.IO.BinaryWriter,System.Byte[])">
+            <summary>
+            写入动态字节数组
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="v">字节数组</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadChar(System.IO.BinaryReader)">
+            <summary>
+            读取字符
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>char</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadString(System.IO.BinaryReader)">
+            <summary>
+            读取字符串
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadFixedString(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            读取固定长度字符串
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <param name="len">字符串长度</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadStringShortArray(System.IO.BinaryReader)">
+            <summary>
+            读取字符串数组
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <returns>字符串数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadFixedStringShortArray(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            读取固定长度字符串数组
+            </summary>
+            <param name="reader">BinaryReader类实例</param>
+            <param name="len">字符串长度</param>
+            <returns>字符串数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteChar(System.IO.BinaryWriter,System.Char)">
+            <summary>
+            写入字符(ANSI)
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="c">字符</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteString(System.IO.BinaryWriter,System.String)">
+            <summary>
+            写入字符串
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="s">字符串</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteFixedString(System.IO.BinaryWriter,System.String,System.Int32)">
+            <summary>
+            按固定长度写入字符串
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="s">字符串</param>
+            <param name="len">长度</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteStringShortArray(System.IO.BinaryWriter,System.String[])">
+            <summary>
+            写入字符串数组
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="data">字符串数组</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteFixedStringShortArray(System.IO.BinaryWriter,System.String[],System.Int32)">
+            <summary>
+            写入固定长度字符串数组
+            </summary>
+            <param name="writer">BinaryWriter类实例</param>
+            <param name="data">字符串数组</param>
+            <param name="len">长度</param>
+        </member>
+        <member name="M:Wind.Comm.Serializer.ReadHugeString(System.IO.BinaryReader)">
+            <summary>
+            读取文本
+            2G以内长度
+            </summary>
+            <param name="reader">读取器</param>
+            <returns>对象</returns>
+        </member>
+        <member name="M:Wind.Comm.Serializer.WriteHugeString(System.IO.BinaryWriter,System.String)">
+            <summary>
+            写入文本
+            2G以内长度
+            </summary>
+            <param name="writer">写入器</param>
+            <param name="value"></param>
+        </member>
+        <member name="T:Wind.Comm.ExceptionBase">
+            <summary>
+            异常基类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ExceptionBase.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ExceptionBase.#ctor(System.String)">
+            <summary>
+            构造
+            </summary>
+            <param name="message">异常信息</param>
+        </member>
+        <member name="P:Wind.Comm.ExceptionBase.ErrorCode">
+            <summary>
+            异常code
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.AuthorizationException">
+            <summary>
+            认证错误异常
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.AuthorizationException.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.AuthorizationException.#ctor(System.String)">
+            <summary>
+            构造
+            </summary>
+            <param name="message">异常信息</param>
+        </member>
+        <member name="T:Wind.Comm.InternalException">
+            <summary>
+            内部异常
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.InternalException.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.InternalException.#ctor(System.String)">
+            <summary>
+            构造
+            </summary>
+            <param name="message">异常信息</param>
+        </member>
+        <member name="T:Wind.Comm.Expo4.MessageV2ReaderHelper">
+            <summary>
+            反序列化帮助类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.#ctor(Wind.Comm.Expo4.Message)">
+            <summary>
+            根据某个Expo消息构建对该消息的反序列化帮助类
+            </summary>
+            <param name="v2Msg">Expo消息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.#ctor(System.Byte[])">
+            <summary>
+            根据消息体的字节数组构建对应的反序列化帮助类
+            </summary>
+            <param name="msgBody">消息体的字节数组</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadByte">
+            <summary>
+            反序列化一个字节
+            </summary>
+            <returns>字节</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadBool">
+            <summary>
+            反序列化一个bool值
+            </summary>
+            <returns>bool值</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadBytes(System.Int32)">
+            <summary>
+            反序列化给定长度的字节数组
+            </summary>
+            <param name="count">长度</param>
+            <returns>字节数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadUInt16">
+            <summary>
+            反序列化一个unsigned short
+            </summary>
+            <returns>unsigned short</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadUInt32">
+            <summary>
+            反序列化unsigned int 32
+            </summary>
+            <returns>uint32</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadUInt64">
+            <summary>
+            反序列化unsigned int 64
+            </summary>
+            <returns>uint64</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadInt16">
+            <summary>
+            反序列化singed short
+            </summary>
+            <returns>singed short</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadInt32">
+            <summary>
+            反序列化singed int 32
+            </summary>
+            <returns>int32</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadInt64">
+            <summary>
+            反序列化singed int 64
+            </summary>
+            <returns>int64</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadSingle">
+            <summary>
+            反序列化singed short
+            </summary>
+            <returns>single</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadDouble">
+            <summary>
+            反序列化double
+            </summary>
+            <returns>double</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2ReaderHelper.ReadByteArray">
+            <summary>
+            反序列化字节数组
+            </summary>
+            <returns>字节数组</returns>
+        </member>
+        <member name="T:Wind.Comm.Expo4.SyncMsgWaitState">
+            <summary>
+            内部同步消息等待对象
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SyncMsgWaitState.syncMsgObj">
+            <summary>
+            同步消息
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.SyncMsgWaitState.autoEventObj">
+            <summary>
+            关联的等待对象
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.AsyncMsgCallbackState">
+            <summary>
+            异步消息回调状态对象
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.AsyncMsgCallbackState.ExObject">
+            <summary>
+            异步回调上下文传递的对象
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.AsyncMsgCallbackState.CallbackFunc">
+            <summary>
+            异步消息返回时候的回调委托
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.AsyncMsgCallbackState.SendTime">
+            <summary>
+            发送时间
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.AsyncMsgCallbackState.MaxWaitTime">
+            <summary>
+            最大等待时间
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.AsyncMsgCallbackState.ReqMsgInfo">
+            <summary>
+            请求消息的信息对象
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AsyncMsgCallbackState.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.AsyncMsgCallbackState.MsgInfo">
+            <summary>
+            消息信息对象
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.AsyncMsgCallbackState.MsgInfo.AppClassID">
+            <summary>
+            应用ID
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.AsyncMsgCallbackState.MsgInfo.CommandValue">
+            <summary>
+            命令字
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.AsyncMsgCallbackState.MsgInfo.PkgSno">
+            <summary>
+            消息流水号
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.IAppSyncMsgListener">
+            <summary>
+            同步消息事件处理接口
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IAppSyncMsgListener.RegisterSyncMsgSNo(System.UInt32,WindMessageBus.SyncUserMessage,System.Threading.AutoResetEvent)">
+            <summary>
+            注册同步流水号
+            </summary>
+            <param name="sno">同步消息的流水号</param>
+            <param name="syncMsgObj">同步消息对象</param>
+            <param name="autoEventObj">关联的事件通知对象</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IAppSyncMsgListener.UnRegisterSyncMsgSno(System.UInt32)">
+            <summary>
+            反注册同步流水号
+            </summary>
+            <param name="sno">同步消息的流水号</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IAppSyncMsgListener.RegisterASyncMsgCallbackSno(System.UInt32,Wind.Comm.Expo4.AsyncMsgCallbackState)">
+            <summary>
+            注册异步消息回调函数
+            </summary>
+            <param name="sno">流水号</param>
+            <param name="exStateObj">关联的上下文对象</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IAppSyncMsgListener.UnRegisterASyncMsgCallbackSno(System.UInt32)">
+            <summary>
+            反注册同步流水号
+            </summary>
+            <param name="sno"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Expo4.InnerMBMessageV2Listener">
+            <summary>
+            内部消息到达处理接口
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.IMBMessageV2Listener">
+            <summary>
+            类似于C++处理模式的消息处理接口
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IMBMessageV2Listener.OnMessage(System.String,Wind.Comm.Expo4.Message)">
+            <summary>
+            从总线收到消息
+            </summary>
+            <param name="configName">当前连接使用的配置别名</param>
+            <param name="message">总线上来的消息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IMBMessageV2Listener.OnEvent(System.String,System.Int32,System.String)">
+            <summary>
+            和总线连接断开等时间触发本函数
+            </summary>
+            <param name="configName">当前连接使用的配置别名</param>
+            <param name="eventCode">事件代码</param>
+            <param name="eventInfo">事件信息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IMBMessageV2Listener.OnMessageFromBus(System.String,Wind.Comm.Expo4.PacketHeader)">
+            <summary>
+            当从总线收到数据的时候触发，一般用于显示调试信息进行日志跟踪
+            </summary>
+            <param name="configName">当前连接使用的配置别名</param>
+            <param name="headerInfo">消息头信息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.IMBMessageV2Listener.OnMessageToBus(System.String,Wind.Comm.Expo4.PacketHeader)">
+            <summary>
+            发送到总线的时候触发
+            </summary>
+            <param name="configName"></param>
+            <param name="headerInfo"></param>
+        </member>
+        <member name="T:Wind.Comm.IBatchMsgListener">
+            <summary>
+            批量消息处理接口
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.IBatchMsgListener.RegisterBatchMsgSNo(System.Threading.AutoResetEvent,System.Collections.Generic.Dictionary{System.UInt32,WindMessageBus.SyncUserMessage})">
+            <summary>
+            注册批量消息的流水号
+            </summary>
+            <param name="autoEventObj">关联的同步事件对象</param>
+            <param name="batchMsgs">批量消息集合</param>
+        </member>
+        <member name="M:Wind.Comm.IBatchMsgListener.UnRegisterBatchMsgSno(System.Collections.Generic.List{System.UInt32})">
+            <summary>
+            反注册批量消息的流水号
+            </summary>
+            <param name="snoList">流水号号列表</param>
+        </member>
+        <member name="M:Wind.Comm.IBatchMsgListener.DisConnectNotify">
+            <summary>
+            断线通知
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.#ctor(Wind.Comm.IExpo4Proxy,System.UInt32,System.UInt32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="proxy">通知代理接口</param>
+            <param name="minSyncNo">最小同步流水号</param>
+            <param name="maxSyncNo">最大同步流水号</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.DisConnectNotify">
+            <summary>
+            断线通知处理函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.RegisterBatchMsgSNo(System.Threading.AutoResetEvent,System.Collections.Generic.Dictionary{System.UInt32,WindMessageBus.SyncUserMessage})">
+            <summary>
+            注册批量处理的同步消息流水号
+            </summary>
+            <param name="autoEventObj">批量消息要进行等待的时间对象</param>
+            <param name="batchMsgs">消息列表，格式：[消息流水号，同步消息对象（含请求消息和回应消息）]</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.UnRegisterBatchMsgSno(System.Collections.Generic.List{System.UInt32})">
+            <summary>
+            反注册批量处理的同步消息流水号
+            </summary>
+            <param name="snoList">流水号列表</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.SetLogHandler(Wind.Comm.OnLogInfo)">
+            <summary>
+            设置日志记录委托函数
+            </summary>
+            <param name="logHandler">日志记录函数</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.OnMessage(System.String,Wind.Comm.Expo4.Message)">
+            <summary>
+            总线上消息到达处理函数
+            </summary>
+            <param name="configName">当前连接的配置名称</param>
+            <param name="message">到达的Expo消息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.OnEvent(System.String,System.Int32,System.String)">
+            <summary>
+            当前连接的网络事件
+            </summary>
+            <param name="configName">当前连接采用的配置名称</param>
+            <param name="eventCode">事件编号</param>
+            <param name="eventInfo">事件描述信息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.OnMessageFromBus(System.String,Wind.Comm.Expo4.PacketHeader)">
+            <summary>
+            总线消息到达的跟踪信息处理函数
+            </summary>
+            <param name="configName">当前连接配置名称</param>
+            <param name="headerInfo">消息的头信息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.OnMessageToBus(System.String,Wind.Comm.Expo4.PacketHeader)">
+            <summary>
+            消息发送到总线的跟踪信息处理函数
+            </summary>
+            <param name="configName">当前连接配置名称</param>
+            <param name="headerInfo">要发送的消息头信息</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.RegisterSyncMsgSNo(System.UInt32,WindMessageBus.SyncUserMessage,System.Threading.AutoResetEvent)">
+            <summary>
+            注册同步消息流水号
+            </summary>
+            <param name="sno">流水号</param>
+            <param name="syncMsgObj">同步消息对象</param>
+            <param name="autoEventObj">关联的等待事件对象</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.UnRegisterSyncMsgSno(System.UInt32)">
+            <summary>
+            反注册同步消息的流水号
+            </summary>
+            <param name="sno">同步流水号</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.RegisterASyncMsgCallbackSno(System.UInt32,Wind.Comm.Expo4.AsyncMsgCallbackState)">
+            <summary>
+            注册异步消息的流水号
+            </summary>
+            <param name="sno">异步消息流水号</param>
+            <param name="callbackState">回调状态对象</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.InnerMBMessageV2Listener.UnRegisterASyncMsgCallbackSno(System.UInt32)">
+            <summary>
+            反注册异步消息的流水号
+            </summary>
+            <param name="sno">异步消息流水号</param>
+            <returns>关联的回调状态对象</returns>
+        </member>
+        <member name="T:Wind.Comm.Expo4.AppServer">
+            <summary>
+            Expo连接对象功能实现的抽象类
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.IAppServer">
+            <summary>
+            Expo接口的接口定义
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.postMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            异步提交消息到总线
+            </summary>
+            <param name="msg">Expo消息</param>
+            <returns>true表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.postMessage(Wind.Comm.Expo4.Message,System.UInt32@)">
+            <summary>
+            异步提交消息到总线，消息的流水号号可以自行指定
+            </summary>
+            <param name="msg">Expo消息</param>
+            <param name="sno">指定的流水号</param>
+            <returns>true表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.sendMessage(WindMessageBus.SyncUserMessage,System.Int32)">
+            <summary>
+            发送同步消息到总线
+            </summary>
+            <param name="msg">同步消息对象，内部包含请求消息和回应消息，但是回应消息必须自行判断是否为通用应答</param>
+            <param name="timeOut">超时消息</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.sendMessage(WindMessageBus.SyncUserMessage,System.UInt16)">
+            <summary>
+            发送同步消息到总线
+            </summary>
+            <param name="msg">同步消息对象，内部包含请求消息和回应消息，但是回应消息必须自行判断是否为通用应答</param>
+            <param name="timeOut">超时消息</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.sendMessage(Wind.Comm.Expo4.Message,Wind.Comm.Expo4.Message@,System.Int32,System.Text.StringBuilder@)">
+            <summary>
+            发送同步消息到总线
+            </summary>
+            <param name="requestMsg">请求消息</param>
+            <param name="responseMsg">回应消息</param>
+            <param name="milliseconds">超时时间，单位为毫秒</param>
+            <param name="errInfo">错误信息</param>
+            <returns>true表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.batchSendMessage(System.Collections.Generic.List{WindMessageBus.SyncUserMessage},System.Int32,System.Text.StringBuilder@)">
+            <summary>
+            批量发送消息，等待所有消息返回本函数才返回，如果本函数返回true，表示所有消息都正确返回，不过可能有些请求返回的是通用错误应答信息
+            需要业务层自行判断，如果返回false，表示有消息发送失败或者有消息超时，具体信息查看参数errInfo
+            </summary>
+            <param name="syncMsgList">批量发送的消息对象列表，列表中的每个消息都是一个消息对，其中一个是请求消息，还有一个是回应消息，回应消息可能为null</param>
+            <param name="milliseconds">所有消息的最大等待时间，如果到了最大等待时间，有消息还没有返回，本函数返回false</param>
+            <param name="errInfo">当本函数返回false的时候，填充具体的错误信息</param>
+            <returns>true表示所有消息都返回了，虽然可能有些消息返回了通用错误应答</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.broadcast(Wind.Comm.Expo4.Message,Wind.Comm.Expo4.PacketHeader.ExpoDealType)">
+            <summary>
+            广播消息到总线
+            </summary>
+            <param name="msg">Expo消息</param>
+            <param name="dealType">不使用，内部设置为全网广播</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.broadcast(Wind.Comm.Expo4.Message,System.UInt32)">
+            <summary>
+            广播消息到总线
+            </summary>
+            <param name="msg">Expo消息</param>
+            <param name="dealType">无效，内部设置为全网广播</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.conBroadcast(Wind.Comm.Expo4.Message,Wind.Comm.Expo4.PacketHeader.ExpoDealType)">
+            <summary>
+            条件广播到总线
+            </summary>
+            <param name="msg">Expo消息</param>
+            <param name="dealType">广播类型</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.conBroadcast(Wind.Comm.Expo4.Message,System.UInt32)">
+            <summary>
+            条件广播到总线
+            </summary>
+            <param name="msg">Expo消息</param>
+            <param name="dealType">广播类型</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.CreateNextSerialNo">
+            <summary>
+            获取下一个可以使用的流水号
+            </summary>
+            <returns>流水号</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.sendASyncMessage(Wind.Comm.Expo4.Message,System.Object,System.UInt32,Wind.Comm.OnAsyncCallCompleted,System.String@)">
+            <summary>
+            发送消息，消息回应或者达到超时时间的时候将自动回调
+            </summary>
+            <param name="requestMsg">请求消息</param>
+            <param name="exStateObj">回调时候附加带上的对象，用于发送消息时候附加自定义的对象，在回调函数中能读取到这个自定义对象</param>
+            <param name="milliseconds">最大超时时间，单位为毫秒，超时自动回调,[目前未实现，无效]</param>
+            <param name="callBackFunc">回调函数</param>
+            <param name="errInfo">本函数调用失败的时候填充错误信息</param>
+            <returns>true表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.sendASyncMessage(Wind.Comm.Expo4.Message,System.Object,Wind.Comm.OnAsyncCallCompleted,System.String@)">
+            <summary>
+            发送消息，消息回应的时候将自动回调
+            </summary>
+            <param name="requestMsg">请求消息</param>
+            <param name="exStateObj">回调时候附加带上的对象，用于发送消息时候附加自定义的对象，在回调函数中能读取到这个自定义对象</param>
+            <param name="callBackFunc">回调函数</param>
+            <param name="errInfo">本函数调用失败的时候填充错误信息</param>
+            <returns>true表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.sendBatchAsyncMessage(System.Collections.Generic.List{Wind.Comm.Expo4.Message},System.Object,System.UInt32,Wind.Comm.OnAsyncAllReturnCallCompleted,System.String@)">
+            <summary>
+            用于批量发送异步消息，发送者的线程不阻塞
+            一般用于某个服务中，假设业务场景如下：
+            服务收到一个请求，该请求必须从几个不同的服务中获取数据，每个服务调用的数据没有相关依赖关系
+            发出批量请求后，发送者线程不阻塞，等到所有其他服务都返回（或者超时）的时候，自动进行回调处理
+            </summary>
+            <param name="requestMsgList">异步请求消息列表</param>
+            <param name="exStateObj">批量发送时候的上下文对象，通常需要包含原始业务请求对象</param>
+            <param name="milliseconds">最大超时时间，单位为毫秒</param>
+            <param name="allReturnCB">所有消息返回后进行回调的函数</param>
+            <param name="errInfo">错误信息，异步投递失败</param>
+            <returns>异步投递是否成功，true表示异步投递成功</returns>
+        </member>
+        <member name="M:Wind.Comm.IAppServer.SetMaintenanceState(System.Boolean)">
+            <summary>
+            设置维护模式状态
+            </summary>
+            <param name="isMaintenanceMode">true表示进入维护模式</param>
+        </member>
+        <member name="P:Wind.Comm.IAppServer.AppClass">
+            <summary>
+            当前连接Expo应用的AppClassID
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IAppServer.AppAddress">
+            <summary>
+            当前连接到Expo上实例的Expo地址
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.IExpo4Proxy">
+            <summary>
+            内部代理接口
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.IExpo4Proxy.ProxyOnEvent(System.Int32,System.String)">
+            <summary>
+            代理Expo连接事件
+            </summary>
+            <param name="eventCode">事件代码</param>
+            <param name="eventInfo">事件信息</param>
+        </member>
+        <member name="M:Wind.Comm.IExpo4Proxy.ProxyOnMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            内部代理Expo消息到达事件
+            </summary>
+            <param name="message">Expo消息</param>
+        </member>
+        <member name="M:Wind.Comm.IExpo4Proxy.GetAppClassID">
+            <summary>
+            获取当前连接的AppClassID
+            </summary>
+            <returns>应用ID</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AppServer.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="url">连接配置文件，绝对路径</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AppServer.Start">
+            <summary>
+            启动，建立到总线的连接,自动取消维护模式
+            </summary>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AppServer.Start(System.Boolean)">
+            <summary>
+            启动，建立到总线的连接，自动进入维护模式
+            </summary>
+            <param name="maintenance">true表示自动进入维护模式</param>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AppServer.SetMaintenanceState(System.Boolean)">
+            <summary>
+            设置维护模式状态
+            </summary>
+            <param name="isMaintenanceMode">true表示进入维护模式</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AppServer.Stop">
+            <summary>
+            停止 ，断开到总线的连接
+            </summary>
+            <returns>0表示成功</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.AppServer.batchSendMessage(System.Collections.Generic.List{WindMessageBus.SyncUserMessage},System.Int32,System.Text.StringBuilder@)">
+            <summary>
+            批量发送消息，等待所有消息返回本函数才返回，如果本函数返回true，表示所有消息都正确返回，不过可能有些请求返回的是通用错误应答信息
+            需要业务层自行判断，如果返回false，表示有消息发送失败或者有消息超时，具体信息查看参数errInfo
+            </summary>
+            <param name="syncMsgList">批量发送的消息对象列表，列表中的每个消息都是一个消息对，其中一个是请求消息，还有一个是回应消息，回应消息可能为null</param>
+            <param name="milliseconds">所有消息的最大等待时间，如果到了最大等待时间，有消息还没有返回，本函数返回false</param>
+            <param name="errInfo">当本函数返回false的时候，填充具体的错误信息</param>
+            <returns>true表示所有消息都返回了，虽然可能有些消息返回了通用错误应答</returns>
+        </member>
+        <member name="P:Wind.Comm.Expo4.AppServer.AppAddress">
+            <summary>
+            当前连接的应用地址
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.AppServer.AppClass">
+            <summary>
+            当前连接的应用ID
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.SimpleParameters">
+            <summary>
+            参数集合类
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.IParameters">
+            <summary>
+            参数集合类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.IParameters.GetItemByName(System.String)">
+            <summary>
+            根据参数名称获取参数接口
+            </summary>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameters.Deserialize(System.Byte[])">
+            <summary>
+            从字节流反序列化
+            </summary>
+            <param name="buffer"></param>
+        </member>
+        <member name="M:Wind.Comm.IParameters.Serialize">
+            <summary>
+            序列化为字节流
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameters.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.IParameters.Parameters">
+            <summary>
+            参数列表
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.SimpleParameters._params">
+            <summary>
+            参数列表
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameters.GetItemByName(System.String)">
+            <summary>
+            根据参数名称获取参数
+            </summary>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameters.Deserialize(System.Byte[])">
+            <summary>
+            反序列化
+            </summary>
+            <param name="buffer"></param>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameters.Serialize">
+            <summary>
+            序列化
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameters.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.SimpleParameters.Parameters">
+            <summary>
+            参数集合
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.SimpleParameter">
+            <summary>
+            参数类
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.IParameter">
+            <summary>
+            参数接口定义
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.IParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader">流读取器</param>
+        </member>
+        <member name="M:Wind.Comm.IParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer">流写入器</param>
+        </member>
+        <member name="M:Wind.Comm.IParameter.Clone">
+            <summary>
+            克隆对象
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsString">
+            <summary>
+            获取字符串值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsHugeString">
+            <summary>
+            获取大文本对象值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsFixedString">
+            <summary>
+            获取固定长度字符串对象值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsByte">
+            <summary>
+            获取字节值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsChar">
+            <summary>
+            获取字符值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsBool">
+            <summary>
+            获取bool值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsInt16">
+            <summary>
+            获取Int16值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsInt32">
+            <summary>
+            获取Int32值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsInt64">
+            <summary>
+            获取Int64值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsSingle">
+            <summary>
+            获取Single值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsUInt16">
+            <summary>
+            获取UInt16值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsUInt32">
+            <summary>
+            获取UInt32值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsUInt64">
+            <summary>
+            获取UInt64值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsDouble">
+            <summary>
+            获取Double值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsDateTime">
+            <summary>
+            获取日期值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsChar8Date">
+            <summary>
+            获取日期8位表示法的值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsTDateTime">
+            <summary>
+            获取日期Delphi表示法的对象值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsByteArray">
+            <summary>
+            获取字节数组值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IParameter.ValueAsStringArray">
+            <summary>
+            获取字符串数组值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.IParameter.ParamName">
+            <summary>
+            参数名
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IParameter.Value">
+            <summary>
+            参数值
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName">参数名</param>
+        </member>
+        <member name="F:Wind.Comm.SimpleParameter._value">
+            <summary>
+            参数值
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsString">
+            <summary>
+            获取字符串值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsByte">
+            <summary>
+            获取字节值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsChar">
+            <summary>
+            获取字符值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsBool">
+            <summary>
+            获取bool值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsInt16">
+            <summary>
+            获取Int16值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsInt32">
+            <summary>
+            获取Int32值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsInt64">
+            <summary>
+            获取Int64值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsSingle">
+            <summary>
+            获取Single值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsUInt16">
+            <summary>
+            获取UInt16值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsUInt32">
+            <summary>
+            获取UInt32值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsUInt64">
+            <summary>
+            获取UInt64值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsDouble">
+            <summary>
+            获取Double值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsByteArray">
+            <summary>
+            获取字节数组值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsStringArray">
+            <summary>
+            获取字符串数组值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsDateTime">
+            <summary>
+            获取日期值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsHugeString">
+            <summary>
+            获取大文本对象值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsFixedString">
+            <summary>
+            获取固定长度字符串对象值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsChar8Date">
+            <summary>
+            获取日期8位表示法的值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimpleParameter.ValueAsTDateTime">
+            <summary>
+            获取DELPHI表示法的日期值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.SimpleParameter.ParamName">
+            <summary>
+            参数名称
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimpleParameter.Value">
+            <summary>
+            参数值
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.ArrayParameter">
+            <summary>
+            数组参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ArrayParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.ArrayParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.ArrayParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.ArrayParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.ArrayParameter.Length">
+            <summary>
+            数组长度
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.ArrayParameter.FixedSize">
+            <summary>
+            固定数组长度
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.ArrayParameter.Item(System.Int32)">
+            <summary>
+            根据Index获取参数
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.ArrayParameter.Param">
+            <summary>
+            Element参数
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.ComplexParameter">
+            <summary>
+            复合参数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ComplexParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.ComplexParameter.ParamByIndex(System.Int32)">
+            <summary>
+            根据Index获取指定参数
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.ComplexParameter.ParamByName(System.String)">
+            <summary>
+            根据参数名称获取参数
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.ComplexParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.ComplexParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.ComplexParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.ComplexParameter.Params">
+            <summary>
+            参数列表
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.ComplexParameter.IsClass">
+            <summary>
+            是否类
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.StringParameter">
+            <summary>
+            字符串参数类
+            64K以内文本
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.StringParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.StringParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.StringParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.StringParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.TextParameter">
+            <summary>
+            文本参数类
+            2G以内文本
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.TextParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.TextParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.TextParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.TextParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.ByteParameter">
+            <summary>
+            字节参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ByteParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.ByteParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.ByteParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.ByteParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.CharParameter">
+            <summary>
+            字符参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CharParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.CharParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.CharParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.CharParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Int32Parameter">
+            <summary>
+            Int32参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Int32Parameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.Int32Parameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.Int32Parameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.Int32Parameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.UInt32Parameter">
+            <summary>
+            UInt32参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.UInt32Parameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt32Parameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt32Parameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt32Parameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.DateParameter">
+            <summary>
+            日期参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.DateParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.DateParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.DateParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.DateParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.TimeParameter">
+            <summary>
+            时间参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.TimeParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.TimeParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.TimeParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.TimeParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.DateTimeParameter">
+            <summary>
+            日期时间参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.DateTimeParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.DateTimeParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.DateTimeParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.DateTimeParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.TDateTimeParameter">
+            <summary>
+            DELPHI日期时间参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.TDateTimeParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.TDateTimeParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.TDateTimeParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.TDateTimeParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Int16Parameter">
+            <summary>
+            Int16参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Int16Parameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.Int16Parameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.Int16Parameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.Int16Parameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.UInt16Parameter">
+            <summary>
+            UInt16参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.UInt16Parameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt16Parameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt16Parameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt16Parameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Int64Parameter">
+            <summary>
+            Int64参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Int64Parameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.Int64Parameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.Int64Parameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.Int64Parameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.UInt64Parameter">
+            <summary>
+            UInt64参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.UInt64Parameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt64Parameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt64Parameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.UInt64Parameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.BoolParameter">
+            <summary>
+            bool参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.BoolParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.BoolParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.BoolParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.BoolParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.DoubleParameter">
+            <summary>
+            Double参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.DoubleParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.DoubleParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.DoubleParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.DoubleParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.SingleParameter">
+            <summary>
+            Single参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SingleParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.SingleParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.SingleParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.SingleParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.ByteArrayParameter">
+            <summary>
+            字节数组参数类
+            2G以内
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ByteArrayParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.ByteArrayParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.ByteArrayParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.ByteArrayParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.StringArrayParameter">
+            <summary>
+            字符串数组参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.StringArrayParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="M:Wind.Comm.StringArrayParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.StringArrayParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.StringArrayParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.FixedStringParameter">
+            <summary>
+            定长字符串参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedStringParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="F:Wind.Comm.FixedStringParameter.Size">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedStringParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.FixedStringParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.FixedStringParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.FixedStringArrayParameter">
+            <summary>
+            定长字符串数组参数类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedStringArrayParameter.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="paramName"></param>
+        </member>
+        <member name="F:Wind.Comm.FixedStringArrayParameter.Size">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedStringArrayParameter.Deserialize(System.IO.BinaryReader)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Wind.Comm.FixedStringArrayParameter.Serialize(System.IO.BinaryWriter)">
+            <summary>
+            序列化
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:Wind.Comm.FixedStringArrayParameter.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Http.ProcessRequestAsyncRun">
+            <summary>
+            用于用户自行实现处理Http请求的函数声明，本函数的实现在IIS中被异步调用
+            </summary>
+            <param name="httpContext">当前http请求的上下文</param>
+            <param name="runState">用来标记异步处理结束的接口</param>
+        </member>
+        <member name="T:Wind.Comm.Http.IAsyncProcessRequestState">
+            <summary>
+            在Httprequest异步处理过程中，用来通知异步处理完成的接口
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Http.IAsyncProcessRequestState.SetComplete">
+            <summary>
+            通知httprequest异步处理完成
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Http.AsyncResultComm">
+            <summary>
+            异步调用
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Http.HttpAsyncHandler">
+            <summary>
+            对HttpHandler异步调用的封装类，需要通过Wind.Comm调用总线服务的HttpHandler都可以从本类派生
+            从而方便的实现异步调用功能
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Http.HttpAsyncHandler.AsyncProcessRequest(System.Web.HttpContext,Wind.Comm.Http.IAsyncProcessRequestState)">
+            <summary>
+            需要派生类实现的方法
+            本方法内的功能被异步调用
+            </summary>
+            <param name="httpContext"></param>
+            <param name="runState">用来标记异步方法完成的接口,异步调用完成必须使用本接口设置完成完成</param>
+        </member>
+        <member name="M:Wind.Comm.Http.HttpAsyncHandler.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            本函数无效
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Wind.Comm.Http.HttpAsyncHandler.BeginProcessRequest(System.Web.HttpContext,System.AsyncCallback,System.Object)">
+            <summary>
+            开始异步处理用户请求
+            </summary>
+            <param name="context">当前Http上下文</param>
+            <param name="cb"></param>
+            <param name="extraData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Http.HttpAsyncHandler.EndProcessRequest(System.IAsyncResult)">
+            <summary>
+            异步调用结束
+            </summary>
+            <param name="ar">异步调用结果</param>
+        </member>
+        <member name="P:Wind.Comm.Http.HttpAsyncHandler.IsReusable">
+            <summary>
+            是否重用，强制重用本
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Attr">
+            <summary>
+            消息的扩展属性，目前没有实现
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.SyncUserMessage">
+            <summary>
+            同步消息对象
+            </summary>
+        </member>
+        <member name="M:WindMessageBus.SyncUserMessage.#ctor(Wind.Comm.Expo4.Message)">
+            <summary>
+            构造
+            </summary>
+            <param name="reqMsg">请求消息</param>
+        </member>
+        <member name="P:WindMessageBus.SyncUserMessage.Request">
+            <summary>
+            请求对象
+            </summary>
+        </member>
+        <member name="P:WindMessageBus.SyncUserMessage.Response">
+            <summary>
+            回应对象
+            </summary>
+        </member>
+        <member name="P:WindMessageBus.SyncUserMessage.ErrInfo">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.CommonResponse">
+            <summary>
+            废弃
+            </summary>
+        </member>
+        <member name="M:WindMessageBus.CommonResponse.#ctor(System.UInt16,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="retCode">错误码</param>
+            <param name="retMsg">错误信息</param>
+        </member>
+        <member name="P:WindMessageBus.CommonResponse.RetCode">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="P:WindMessageBus.CommonResponse.RetMsg">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.IPassiveAppServer">
+            <summary>
+            Expo调用接口定义
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.CommandHandler">
+            <summary>
+            API命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.BroadcastCommandHandler">
+            <summary>
+            广播通知类命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.MulticastCommandHandler">
+            <summary>
+            组播通知类命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.LogHandler">
+            <summary>
+            日志记录代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.ReplyHandler">
+            <summary>
+            自动应答委托
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.BusMessageProcessHandler">
+            <summary>
+            使用类似于C++方式直接处理总线消息
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.IPassiveAppServer.DefaultTimeout">
+            <summary>
+            配置文件中的默认同步消息超时时间
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.MessageCollection">
+            <summary>
+            内部同步消息集合
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MessageCollection.AutoEvent">
+            <summary>
+            消息通知事件对象
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MessageCollection.SyncMsgList">
+            <summary>
+            同步消息集合列表
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.CommSection">
+            <summary>
+            命令处理配置类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CommSection.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSection.APIDefine">
+            <summary>
+            API命令定义文件
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSection.MBUrl">
+            <summary>
+            消息总线定义文件
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSection.TimeOut">
+            <summary>
+            同步命令超时时间间隔
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSection.IsPadding">
+            <summary>
+            不使用
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSection.MTUSize">
+            <summary>
+            不使用
+            </summary>
+        </member>
+        <member name="T:System.Web.HttpContextEx">
+            <summary>
+            对系统的HttpContext进行扩展，增加一些扩展方法读取或者设置附加属性
+            </summary>
+        </member>
+        <member name="F:System.Web.HttpContextEx.ABTestingFlag">
+            <summary>
+            用来在httpContext对象标记当前是否是灰度用户的key常量
+            </summary>
+        </member>
+        <member name="F:System.Web.HttpContextEx.RuningIIS">
+            <summary>
+            标识当前Wind.Comm运行在IIS的环境中
+            </summary>
+        </member>
+        <member name="M:System.Web.HttpContextEx.InABTestingMode(System.Web.HttpContext)">
+            <summary>
+            判断当前http上下文对象关联的用户是否为灰度状态
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.SimplePassiveAppServerEx">
+            <summary>
+            多个Expo连接的对象管理类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.SimplePassiveAppServerEx.LogHandler">
+            <summary>
+            日志记录代理
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServerEx.#ctor(Wind.Comm.OnLogInfo)">
+            <summary>
+            构造
+            </summary>
+            <param name="logHandler">日志记录函数</param>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServerEx.GetRegedAppClassIDInfo(System.Collections.Generic.List{System.Int32}@)">
+            <summary>
+            获取当前多个连接的应用ID列表
+            </summary>
+            <param name="appClassIDList">应用ID列表</param>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServerEx.GetConfigIDList">
+            <summary>
+            获取配置ID列表
+            </summary>
+            <returns>配置ID列表</returns>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServerEx.Start">
+            <summary>
+            启动所有的连接
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServerEx.Stop">
+            <summary>
+            停止所有的连接
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServerEx.First">
+            <summary>
+            获取第一个连接对象类
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServerEx.Item(System.Int32)">
+            <summary>
+            根据应用ID获取对应的连接对象
+            </summary>
+            <param name="appClass">应用ID</param>
+            <returns>Expo连接对象，可能为null</returns>
+        </member>
+        <member name="T:Wind.Comm.Argument">
+            <summary>
+            参数类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Argument.ArgName">
+            <summary>
+            参数名称
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Argument.BindingID">
+            <summary>
+            绑定类型ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Argument.FixedSize">
+            <summary>
+            定长类型长度，适用于定长字符串类型
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.BindingItem">
+            <summary>
+            绑定项类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BindingItem.BindingID">
+            <summary>
+            绑定类型ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BindingItem.ParamType">
+            <summary>
+            系统数据类型
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BindingItem.BindingType">
+            <summary>
+            参数数据类型，类似于Wind.Comm.XXXXParameter
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BindingItem.Properties">
+            <summary>
+            属性集合
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.BindingItem.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.BindingItem.#ctor(System.String,System.Type,System.Type)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="bindingId"></param>
+            <param name="paramType"></param>
+            <param name="BindingType"></param>
+        </member>
+        <member name="T:Wind.Comm.CommandRangeEnum">
+            <summary>
+            命令传递范围定义
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandRangeEnum.Broker">
+            <summary>
+            站内
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandRangeEnum.Group">
+            <summary>
+            组内
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandRangeEnum.InterGroup">
+            <summary>
+            组间
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.CommandDefinition">
+            <summary>
+            命令定义类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.CommandName">
+            <summary>
+            接口函数名称
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.AppClass">
+            <summary>
+            应用类别ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.CommandId">
+            <summary>
+            命令ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.Range">
+            <summary>
+            命令传递范围
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.InputArgs">
+            <summary>
+            入口参数列表
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.OutputArgs">
+            <summary>
+            出口参数列表
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.Request">
+            <summary>
+            内部使用的入口参数列表
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandDefinition.Response">
+            <summary>
+            内部使用的出口参数列表
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommandDefinition.CommandKey">
+            <summary>
+            命令键值
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Definitions">
+            <summary>
+            API定义管理类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Definitions.GetBindingItem(System.String)">
+            <summary>
+            根据绑定项ID获取绑定绑定项
+            </summary>
+            <param name="bindingID">绑定项ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Definitions.FormatBindingID(System.String)">
+            <summary>
+            格式化绑定表达式
+            </summary>
+            <param name="fullTypeName">C#类全局限定名称</param>
+            <returns>绑定表达式</returns>
+        </member>
+        <member name="M:Wind.Comm.Definitions.ConstructParameters(System.Collections.Generic.List{Wind.Comm.Argument})">
+            <summary>
+            根据参数列表构造内部使用的参数列表
+            </summary>
+            <param name="arguments">参数定义列表</param>
+            <returns>参数接口</returns>
+        </member>
+        <member name="P:Wind.Comm.Definitions.CommandDefinitions">
+            <summary>
+            命令定义集合
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Definitions.BindingDefinitions">
+            <summary>
+            参数绑定项集合
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.DefinitionReader">
+            <summary>
+            API定义配置文件加载类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.DefinitionReader.Read(System.String)">
+            <summary>
+            读取API定义
+            </summary>
+            <param name="fileName">配置文件名称</param>
+            <returns>定义</returns>
+        </member>
+        <member name="T:Wind.Comm.BaseDefinitionOperator">
+            <summary>
+            初始化操作类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.GetDefinitions">
+            <summary>
+            获取ApiDefine对象
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.TryGetCommandDefinition(System.UInt32,System.UInt32,Wind.Comm.CommandDefinition@)">
+            <summary>
+            根据classID和命令字获取具体的定义对象，查找使用组合
+            </summary>
+            <param name="appClass">AppClassID</param>
+            <param name="commandId">命令字</param>
+            <param name="commandDefinition">对应的定义对象</param>
+            <returns>true表示找到</returns>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.TryGetCommandDefinition(System.String,Wind.Comm.CommandDefinition@)">
+            <summary>
+            废弃
+            </summary>
+            <param name="key">key</param>
+            <param name="commandDefinition">定义</param>
+            <returns>true表示找到</returns>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.GetCommandDefinition(System.UInt32,System.UInt32)">
+            <summary>
+            获取命令定义
+            </summary>
+            <param name="appClass">应用类型ID</param>
+            <param name="commandId">命令ID</param>
+            <returns>定义</returns>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.SetCommandDefinition(System.UInt32,System.UInt32,Wind.Comm.CommandDefinition)">
+            <summary>
+            把定义设置到内存
+            </summary>
+            <param name="appClass">应用ID</param>
+            <param name="commandId">命令字</param>
+            <param name="commandDefinition">要设置的定义</param>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.SetCommandDefinition(System.String,Wind.Comm.CommandDefinition)">
+            <summary>
+            废弃
+            </summary>
+            <param name="key">key</param>
+            <param name="commandDefinition">定义</param>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.ClearCommandDefinition(System.UInt32,System.UInt32)">
+            <summary>
+            在内存中清除给定应用ID和命令字对应的定义
+            </summary>
+            <param name="appClass">应用ID</param>
+            <param name="commandId">命令字</param>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.BindingParameters(System.Collections.Generic.List{Wind.Comm.Argument},Wind.Comm.IParameters,System.Object[])">
+            <summary>
+            绑定到内部参数
+            根据args定义把argValues中的值绑定到parameters中
+            </summary>
+            <param name="args">参数列表</param>
+            <param name="parameters">内部参数列表</param>
+            <param name="argValues">参数值数组</param>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.BindingArguments(System.Collections.Generic.List{Wind.Comm.Argument},Wind.Comm.IParameters,System.Object[]@)">
+            <summary>
+            输出到外部参数
+            根据args定义把parameters中的值输出到argValues中
+            </summary>
+            <param name="args">参数列表</param>
+            <param name="parameters">内部参数列表</param>
+            <param name="argValues">参数值数组</param>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.CheckArguments(Wind.Comm.CommandDefinition,System.Object[])">
+            <summary>
+            检查定义和输入参数的组成结构
+            </summary>
+            <param name="def">定义</param>
+            <param name="inputArgs">输入参数</param>
+        </member>
+        <member name="M:Wind.Comm.BaseDefinitionOperator.PrepareParameters(Wind.Comm.CommandDefinition,Wind.Comm.IParameters@,Wind.Comm.IParameters@)">
+            <summary>
+            准备参数列表
+            从命令定义中克隆参数列表（优化处理速度）
+            </summary>
+            <param name="def">API定义管理器</param>
+            <param name="request">请求参数列表</param>
+            <param name="response">响应参数列表</param>
+        </member>
+        <member name="T:Wind.Comm.DefinitionOperator">
+            <summary>
+            定义操作类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.DefinitionOperator.InitInstance">
+            <summary>
+            单例方式获取实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.Expo4.MessageV2Return">
+            <summary>
+            同步消息回应对象
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Return.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.MessageV2Return.V2Msg">
+            <summary>
+            回应消息
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.MessageV2Return.Succ">
+            <summary>
+            同步消息调用是否成功
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.MessageV2Return.ErrInfo">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.CustomeExpoSerializer">
+            <summary>
+            自定义序列化对象
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CustomeExpoSerializer.#ctor(System.UInt32,System.UInt32,System.Type[],System.Type[])">
+            <summary>
+            构造
+            </summary>
+            <param name="appClass">应用ID</param>
+            <param name="commandId">命令字</param>
+            <param name="inputValueTypes">输入参数</param>
+            <param name="outputValueTypes">输出参数</param>
+        </member>
+        <member name="M:Wind.Comm.CustomeExpoSerializer.#ctor(System.String,System.Type[],System.Type[])">
+            <summary>
+            构造
+            </summary>
+            <param name="commandKey">可以</param>
+            <param name="inputValueTypes">输入参数</param>
+            <param name="outputValueTypes">输出参数</param>
+        </member>
+        <member name="M:Wind.Comm.CustomeExpoSerializer.ToExpoMessageBody(System.Object[])">
+            <summary>
+            根据输入参数获取Expo消息体
+            </summary>
+            <param name="inputValues">输入参数</param>
+            <returns>消息体</returns>
+        </member>
+        <member name="M:Wind.Comm.CustomeExpoSerializer.FromExpoMessageBody(System.Byte[])">
+            <summary>
+            根据消息体内容获取对象列表
+            </summary>
+            <param name="messageResponseBody">消息体</param>
+            <returns>对象列表</returns>
+        </member>
+        <member name="T:Wind.Comm.BroadcastBody">
+            <summary>
+            在C#中发全网广播的消息体结构
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BroadcastBody.ItemArray">
+            <summary>
+            消息体
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.BroadcastItemIndicator">
+            <summary>
+            全网广播的字段标识和取值
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BroadcastItemIndicator.IndicatorID">
+            <summary>
+            字段标识ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BroadcastItemIndicator.IndicatorValueArray">
+            <summary>
+            对应的字段取值
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.BroadcastItem">
+            <summary>
+            全网广播对象
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.BroadcastItem.ItemIndicatorArray">
+            <summary>
+            对象成员
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.SimplePassiveAppServer">
+            <summary>
+            单连接的Expo连接对象
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.#ctor(System.String,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="url"></param>
+            <param name="defaultTimeout">同步消息的默认超时时间，单位为毫秒</param>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.Start">
+            <summary>
+            启动服务
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.Stop">
+            <summary>
+            停止服务
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.onEvent(System.Int32,System.String)">
+            <summary>
+            通讯层事件处理函数
+            </summary>
+            <param name="code">事件类型</param>
+            <param name="msg">事件消息</param>
+        </member>
+        <member name="M:Wind.Comm.SimplePassiveAppServer.onMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            通讯层消息处理函数
+            命令处理主要在该函数中完成
+            </summary>
+            <param name="msg">消息实例</param>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServer.CommandHandler">
+            <summary>
+            API命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServer.BroadcastCommandHandler">
+            <summary>
+            广播通知类命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServer.MulticastCommandHandler">
+            <summary>
+            组播通知类命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServer.LogHandler">
+            <summary>
+            日志记录代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServer.BusMessageProcessHandler">
+            <summary>
+            使用类似于C++方式直接处理总线消息
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.SimplePassiveAppServer.DefaultTimeout">
+            <summary>
+            默认连接上的同步消息默认超时时间，单位为毫秒
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.CommandProxyHandler">
+            <summary>
+            命令代理类
+            用于编写接口代理函数
+            </summary>
+            <param name="sender">发送者</param>
+            <param name="header">命令头</param>
+            <param name="request">请求参数列表</param>
+            <param name="response">响应参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.RealProxy">
+            <summary>
+            命令执行代理类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.InitInstance">
+            <summary>
+            实例化单件
+            </summary>
+            <returns>Expo代理</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.InitInstance(System.Int32)">
+            <summary>
+            根据给定的应用ID初始化Expo连接代理对象
+            </summary>
+            <param name="appclass">应用ID</param>
+            <returns>Expo代理对象</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.InitInstanceByConnection(Wind.Comm.Expo4.AppServer)">
+            <summary>
+            使用已有连接实例化单件
+            通常在应用服务器同时对外提供服务及使用其他应用提供的服务时可以传入已建立的连接
+            </summary>
+            <param name="connection">Expo连接对象</param>
+            <returns>连接代理</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.InitInstanceByConnection(Wind.Comm.IAppServer)">
+            <summary>
+            使用已有连接实例化单件
+            通常在应用服务器同时对外提供服务及使用其他应用提供的服务时可以传入已建立的连接
+            </summary>
+            <param name="connection">Expo连接接口</param>
+            <returns>Expo连接代理</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.InitInstanceByConnection(Wind.Comm.Expo4.AppServer,System.Int32)">
+            <summary>
+            使用已有的连接实例和应用获取连接代理
+            </summary>
+            <param name="connection">Expo连接对象</param>
+            <param name="appclass">应用ID</param>
+            <returns>Expo连接代理</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.DoBroadcastCommandProxy(Wind.Comm.CommandHeader,System.Object[])">
+            <summary>
+            广播命令执行代理函数
+            </summary>
+            <param name="header">命令头</param>
+            <param name="inputValues">入口参数数组</param>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.DoBroadcastCommandProxy(Wind.Comm.CommandHeader,Wind.Comm.BroadcastBody)">
+            <summary>
+            广播命令执行代理函数
+            </summary>
+            <param name="header">命令头</param>
+            <param name="inputValues">入口参数数组</param>
+            <returns>无</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.DoMulticastCommandProxy(Wind.Comm.CommandHeader,System.Object[])">
+            <summary>
+            组播命令执行代理函数
+            </summary>
+            <param name="header">命令头</param>
+            <param name="inputValues">入口参数数组</param>
+            <returns>无</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.DoCommandProxy(Wind.Comm.CommandHeader,System.Object[],System.Object[]@)">
+            <summary>
+            API命令执行代理函数
+            </summary>
+            <param name="header">命令头</param>
+            <param name="inputValues">入口参数数组</param>
+            <param name="outputValues">出口参数数组</param>
+            <returns>true表示调用成功摈弃反序列化成功</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.DoCommandProxy(Wind.Comm.CommandHeader,Wind.Comm.IParameters,Wind.Comm.IParameters@)">
+            <summary>
+            命令执行代理函数
+            </summary>
+            <param name="header">命令头</param>
+            <param name="request">请求参数列表</param>
+            <param name="response">响应参数列表</param>
+            <returns>true表示调用成功摈弃反序列化成功</returns>
+        </member>
+        <member name="M:Wind.Comm.RealProxy.GetRealAppClass">
+            <summary>
+            获取当前的AppClass
+            </summary>
+            <returns>返回当前的AppClass(AppConfig.xml中的配置)</returns>
+        </member>
+        <member name="P:Wind.Comm.RealProxy.PassiveAppServerIntf">
+            <summary>
+            必须判断返回是否为空，如果初始化的时候是给出了连接对象，本属性返回为空
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.RealProxy.AppServerIntf">
+            <summary>
+            获取Expo调用的高级接口
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.MessageV2BuilderHelper">
+            <summary>
+            手工序列化消息的帮助类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.GetMsgBody">
+            <summary>
+            获取消息体
+            </summary>
+            <returns>消息体</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.Clear">
+            <summary>
+            重新初始化当前帮助类内部的数据
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteByte(System.Byte)">
+            <summary>
+            写入一个字节
+            </summary>
+            <param name="v">字节</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteBool(System.Boolean)">
+            <summary>
+            写入bool变量
+            </summary>
+            <param name="v">值</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteBytes(System.Byte[])">
+            <summary>
+            写入字节数组
+            </summary>
+            <param name="v">字节数组</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteUInt16(System.UInt16)">
+            <summary>
+            序列化无符号short
+            </summary>
+            <param name="v">ushort</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteUInt32(System.UInt32)">
+            <summary>
+            序列化无符号int32
+            </summary>
+            <param name="v">unsigned int</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteUInt64(System.UInt64)">
+            <summary>
+            序列化无符号int64
+            </summary>
+            <param name="v">unsigned int 64</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteInt16(System.Int16)">
+            <summary>
+            序列化有符号short
+            </summary>
+            <param name="v">short</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteInt32(System.Int32)">
+            <summary>
+            序列化有符号int32
+            </summary>
+            <param name="v">int32</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteInt64(System.Int64)">
+            <summary>
+            序列化有符号int 64
+            </summary>
+            <param name="v">signed int 64</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteSingle(System.Single)">
+            <summary>
+            序列化有符号short
+            </summary>
+            <param name="v">single</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteDouble(System.Double)">
+            <summary>
+            序列化double
+            </summary>
+            <param name="v">double</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteByteArray(System.Byte[])">
+            <summary>
+            序列化字节数组
+            </summary>
+            <param name="v">字节数组</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteChar(System.Char)">
+            <summary>
+            序列化一个字符
+            </summary>
+            <param name="v">字符，可以多字节</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteString(System.String)">
+            <summary>
+            序列化字符串，字符串最大长度32k
+            </summary>
+            <param name="v">字符串，utf8</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteFixedString(System.String,System.Int32)">
+            <summary>
+            序列化定长字符串
+            </summary>
+            <param name="v">字符串</param>
+            <param name="len">长度</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteStringShortArray(System.String[])">
+            <summary>
+            序列化短字符串数组，单个字符串最大长度为32k
+            </summary>
+            <param name="v">字符串数组</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteFixedStringShortArray(System.String[],System.Int32)">
+            <summary>
+            序列化定长字符串数组
+            </summary>
+            <param name="v">字符串数组</param>
+            <param name="len">字符串长度</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2BuilderHelper.WriteHugeString(System.String)">
+            <summary>
+            序列化巨型字符串，字符串最大长度为2G
+            </summary>
+            <param name="v">字符串</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4StructEx.CreatePktHeader(Wind.Comm.Expo4.JavaPacketHeader)">
+            <summary>
+            根据非托管的消息包头创建托管消息对象的包头信息
+            </summary>
+            <param name="javaPkgHeader">非托管消息包头，在非托管库中定义</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4StructEx.CreateSkyHeader(Wind.Comm.Expo4.JavaSkyHeader)">
+            <summary>
+            根据非托管的Sky扩展头创建托管消息对象中的Sky扩展头
+            </summary>
+            <param name="javaSkyHeader"></param>
+            <returns>Sky扩展头</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4StructEx.CreateV2Msg(Wind.Comm.Expo4.JavaMessage)">
+            <summary>
+            根据非托管的ExpoV2消息创建C#中托管的ExpoV2消息对象
+            </summary>
+            <param name="javaMsg">在C++库中创建，在C++库中首先根据消息的智能指针创建用于托管和非托管交互的struct对象，传递给托管层后在C++中释放该对象</param>
+            <returns>Expo消息</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4StructEx.ToJavaPacketHeader(Wind.Comm.Expo4.PacketHeader)">
+            <summary>
+            Expo的包头转换为Java格式定义的包头
+            </summary>
+            <param name="pktHeader">Expo包头</param>
+            <returns>java格式的包头</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4StructEx.ToJavaSkyHeader(Wind.Comm.Expo4.SkyHeader)">
+            <summary>
+            转换Expo的Sky扩展头维java格式的扩展头
+            </summary>
+            <param name="skyHeader">Expo的Sky扩展头</param>
+            <returns>java格式的扩展头</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4StructEx.CreateJavaMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            创建java格式的消息体
+            </summary>
+            <param name="v2Msg">Expo消息</param>
+            <returns>java格式的消息体</returns>
+        </member>
+        <member name="T:Wind.Comm.IPrincipal">
+            <summary>
+            授权检查接口定义
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.IPrincipal.IsInRole(System.UInt32,System.String)">
+            <summary>
+            授权检查
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="moduleName">模块名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IPrincipal.IsInRole(System.UInt32,System.UInt32)">
+            <summary>
+            授权检查
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="moduleId">模块ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.IPrincipal.GetDataRight(System.UInt32,System.String[],System.String[],System.Byte[]@,System.Byte[]@)">
+            <summary>
+            检查用户的数据权限
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="indicaList">指标列表</param>
+            <param name="symbolList">品种列表</param>
+            <param name="indicaRights">指标权限清单</param>
+            <param name="symbolRights">品种权限清单</param>
+        </member>
+        <member name="M:Wind.Comm.IPrincipal.IsQuotaExceeded(System.UInt32,System.Int32,System.String[])">
+            <summary>
+            检查用户的数据提取限制
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="count">指标个数</param>
+            <param name="indicaList">指标列表</param>
+        </member>
+        <member name="T:Wind.Comm.CommandStubHandler">
+            <summary>
+            命令处理存根代理定义
+            </summary>
+            <param name="sender">发送者</param>
+            <param name="header">命令头</param>
+            <param name="inputArgs">入口参数数组</param>
+            <param name="outputArgs">出口参数数组</param>
+        </member>
+        <member name="T:Wind.Comm.CommandManager">
+            <summary>
+            命令管理类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CommandManager.#ctor(Wind.Comm.ICommandStub)">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandManager._stub">
+            <summary>
+            命令处理存根
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CommandManager.DoCommand(Wind.Comm.CommandItem)">
+            <summary>
+            API命令执行方法
+            </summary>
+            <param name="command">命令信息类</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.CommandManager.DoBroadcastCommand(Wind.Comm.CommandItem)">
+            <summary>
+            广播命令执行方法
+            </summary>
+            <param name="command">命令信息类</param>
+        </member>
+        <member name="M:Wind.Comm.CommandManager.DoMulticastCommand(Wind.Comm.CommandItem)">
+            <summary>
+            组播命令执行方法
+            </summary>
+            <param name="command">命令信息类</param>
+        </member>
+        <member name="P:Wind.Comm.CommandManager.Principal">
+            <summary>
+            授权检查接口
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.APIElement">
+            <summary>
+            定义ApIDefine文件的定义对象
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.APIElement.url">
+            <summary>
+            API命令定义文件
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.MBElement">
+            <summary>
+            定义连接配置文件的定义对象
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MBElement.AppClass">
+            <summary>
+            应用ID
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MBElement.MBUrl">
+            <summary>
+            消息总线定义文件
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MBElement.TimeOut">
+            <summary>
+            同步命令超时时间间隔
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MBElement.IsPadding">
+            <summary>
+            无效
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MBElement.MTUSize">
+            <summary>
+            无效
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.MBElements">
+            <summary>
+            Expo连接配置
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.MBElements.Item(System.String)">
+            <summary>
+            多连接配置
+            </summary>
+            <param name="name">配置名称</param>
+            <returns>配置对象</returns>
+        </member>
+        <member name="P:Wind.Comm.MBElements.Item(System.Int32)">
+            <summary>
+            多连接配置
+            </summary>
+            <param name="index">索引</param>
+            <returns>配置对象</returns>
+        </member>
+        <member name="T:Wind.Comm.CommSectionEx">
+            <summary>
+            多连接配置对象定义
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSectionEx.APIDefine">
+            <summary>
+            AppDefine.xml
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.CommSectionEx.MBList">
+            <summary>
+            连接配置对象
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.SimplePrincipal">
+            <summary>
+            SimplePrincipal类，IPrincipal接口的默认实现
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.SimplePrincipal.IsInRole(System.UInt32,System.String)">
+            <summary>
+            是否具有模块权限
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="moduleName">模块名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimplePrincipal.IsInRole(System.UInt32,System.UInt32)">
+            <summary>
+            是否具有模块权限
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="moduleId">模块ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.SimplePrincipal.GetDataRight(System.UInt32,System.String[],System.String[],System.Byte[]@,System.Byte[]@)">
+            <summary>
+            批量获取数据授权信息
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="indicaList">指标列表</param>
+            <param name="symbolList">品种列表</param>
+            <param name="indicaRights">指标权限</param>
+            <param name="symbolRights">品种权限</param>
+        </member>
+        <member name="M:Wind.Comm.SimplePrincipal.IsQuotaExceeded(System.UInt32,System.Int32,System.String[])">
+            <summary>
+            检查是否超出数据提取限额
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="count">指标个数</param>
+            <param name="indicaList">指标列表</param>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.MsgTraceSection">
+            <summary>
+            废弃，不再使用
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.MsgTraceSection.#ctor">
+            <summary>
+            废弃
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.ESign_DeliverType">
+            <summary>
+            消息分发类型
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_DeliverType.Forward">
+            <summary>
+            转发
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_DeliverType.CondBroadcast">
+            <summary>
+            条件广播
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_DeliverType.Broadcast">
+            <summary>
+            全网广播
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.ESign_PacketType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_PacketType.Request">
+            <summary>
+            请求消息
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_PacketType.Answer">
+            <summary>
+            回应消息
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_PacketType.Broker">
+            <summary>
+            通用错误应答
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.ESign_DealType">
+            <summary>
+            消息作用域
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_DealType.IntraBroker">
+            <summary>
+            当前节点
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_DealType.IntraGroup">
+            <summary>
+            当前组
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ESign_DealType.InterGroup">
+            <summary>
+            所有组
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.EExtHeaderTagType">
+            <summary>
+            扩展头标志定义
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.EExtHeaderTagType.NoExtHeader">
+            <summary>
+            无扩展头
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.EExtHeaderTagType.Sky">
+            <summary>
+            Sky扩展头标志
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.ECompressType">
+            <summary>
+            压缩标志
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ECompressType.NoCompress">
+            <summary>
+            无需压缩
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ECompressType.ZLIB">
+            <summary>
+            采用Zip算法压缩
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.ECodecType">
+            <summary>
+            加密标志
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ECodecType.NoCodec">
+            <summary>
+            不需要加密
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.ECodecType.DES">
+            <summary>
+            采用DES压缩算法
+            </summary>
+        </member>
+        <member name="T:WindMessageBus.EABTestingType">
+            <summary>
+            消息是否是灰度消息
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.EABTestingType.NoABTesting">
+            <summary>
+            非灰度消息
+            </summary>
+        </member>
+        <member name="F:WindMessageBus.EABTestingType.ABTesting">
+            <summary>
+            灰度消息
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.PacketHeader">
+            <summary>
+            Expo消息头定义
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.#ctor">
+            <summary>
+            消息包头的构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.CopyFrom(Wind.Comm.Expo4.PacketHeader)">
+            <summary>
+            从一个消息头中复制到当前消息头
+            </summary>
+            <param name="header">消息头</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.GetCmdMainVersion">
+            <summary>
+            获取命令字的主版本号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.GetCmdSubVersion">
+            <summary>
+            获取命令字的子版本号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.SetCmdMainVersion(System.Byte)">
+            <summary>
+            设置命令字的主版本号
+            </summary>
+            <param name="value">主版本号</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.SetCmdSubVersion(System.Byte)">
+            <summary>
+            设置命令字的子版本号
+            </summary>
+            <param name="value">子版本号</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.PacketHeader.SetNeedZip(System.Boolean)">
+            <summary>
+            设置消息是否需要压缩
+            </summary>
+            <param name="needZip">true表示需要zip压缩</param>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CommandClass">
+            <summary>
+            AppClassID
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CommandValue">
+            <summary>
+            CommandID，命令字
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.DeliverType">
+            <summary>
+            消息分发类型
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.MessageType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.DealType">
+            <summary>
+            消息处理域
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CmdVersion">
+            <summary>
+            消息中命令字的版本
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.AlgorithCode">
+            <summary>
+            算法标志，包含压缩、加密、灰度信息
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.MessageBodyLen">
+            <summary>
+            不包含Sky扩展头的长度，为消息体body部分实际长度
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.PkgSerialNo">
+            <summary>
+            消息流水号
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.ExtHeader">
+            <summary>
+            扩展消息头标志，目前0表示无Sky扩展头，10表示有Sky扩展头
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.SourceAddr">
+            <summary>
+            消息的源地址
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.DstAppAddr">
+            <summary>
+            消息的目标地址
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.ExtHeaderTag">
+            <summary>
+            消息扩展头类型
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.Sign_PacketType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.Sign_DeliverType">
+            <summary>
+            消息分发方式
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.Sign_DealType">
+            <summary>
+            消息处理的作用域范围
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CmdMainVersion">
+            <summary>
+            消息命令字的主版本号
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CmdSubVersion">
+            <summary>
+            消息命令字的子版本号
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CompressType">
+            <summary>
+            消息的压缩类型
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.PacketHeader.CodecType">
+            <summary>
+            消息的加密类型
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.PacketHeader.ExpoDeliverType">
+            <summary>
+            消息分发类型
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoDeliverType.Forward">
+            <summary>
+            转发消息
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoDeliverType.CondBroadcast">
+            <summary>
+            条件广播消息
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoDeliverType.Broadcast">
+            <summary>
+            全网广播消息
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.PacketHeader.ExpoMessageType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoMessageType.Request">
+            <summary>
+            请求消息
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoMessageType.Answer">
+            <summary>
+            回应消息
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoMessageType.CommRsp">
+            <summary>
+            总线通用错误应答消息
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.PacketHeader.ExpoDealType">
+            <summary>
+            消息作用域范围
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoDealType.IntraBroker">
+            <summary>
+            只在当前节点上处理
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoDealType.IntraGroup">
+            <summary>
+            只在当前组上进行处理
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.PacketHeader.ExpoDealType.InterGroup">
+            <summary>
+            在所有组上进行处理
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.Message">
+            <summary>
+            C#中的Expo对象
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.getMsgBody">
+            <summary>
+            获取消息体字节数组
+            </summary>
+            <returns>字节数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.setMsgBody(System.Byte[])">
+            <summary>
+            设置消息体字节数组
+            </summary>
+            <param name="msgBody">字节数组</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.SetCommand(System.UInt16,System.UInt32)">
+            <summary>
+            设置命令字
+            </summary>
+            <param name="commandClass">目标应用ID</param>
+            <param name="commandValue">目标应用上的命令ID</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.reply">
+            <summary>
+            根据本消息创建回复消息，Sky扩展头同原有的消息，交换了源和目标信息，消息体内容为空，没有填写        
+            </summary>
+            <returns>对应的回应消息</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.MakeCommResponse(System.UInt16,System.String)">
+            <summary>
+            在当前消息上创建对应的通用错误应答消息
+            </summary>
+            <param name="errCode">错误码</param>
+            <param name="errInfo">错误信息</param>
+            <returns>通用错误消息</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.replyCommRsp(System.Int16,System.String)">
+            <summary>
+            在当前消息上创建对应的通用错误应答消息
+            </summary>
+            <param name="msgCode">错误码</param>
+            <param name="rspInfo">错误信息</param>
+            <returns>通用错误应答消息</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Message.PrintMsgInfo(System.Text.StringBuilder)">
+            <summary>
+            打印消息的基本信息
+            </summary>
+            <param name="sb">字符串对象</param>
+        </member>
+        <member name="P:Wind.Comm.Expo4.Message.Header">
+            <summary>
+            设置本属性采用copy方式（保证内存使用的安全性），获取本属性直接返回对象地址
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.Message.Sky">
+            <summary>
+            设置本属性采用copy方式（保证内存使用的安全性），获取本属性直接返回对象地址
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.MessageV2Ex">
+            <summary>
+            对Message对象的外部函数扩展类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.ToAnswerObj(Wind.Comm.Expo4.Message)">
+            <summary>
+            把一个回应消息转换为基于appDefine.xml的回应数据数组
+            </summary>
+            <param name="msg">回应消息</param>
+            <returns>apiDefine.xml中定义的对象数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.ToRequestObj(Wind.Comm.Expo4.Message,Wind.Comm.CommandHeader@)">
+            <summary>
+            转换一个请求类型的消息为基于wind.comm中的请求参数数组类型
+            </summary>
+            <param name="msg">请求消息</param>
+            <param name="header">头信息</param>
+            <returns>apiDefine.xml中定义的请求对象数组</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.FillBody(Wind.Comm.Expo4.Message,System.Object[],System.Boolean)">
+            <summary>
+            根据AppDefine.xml中的内容在消息中填充数据
+            </summary>
+            <param name="msg">要填充的消息对象</param>
+            <param name="Values">要填充到消息体中的内容</param>
+            <param name="isRequest">表示当前消息体填充是按请求类型还是回应类型填充</param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.isErrMsg(Wind.Comm.Expo4.Message)">
+            <summary>
+            判断消息是否是通用错误应答
+            </summary>
+            <param name="msg">Expo消息</param>
+            <returns>true表示是一个错误消息</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.GetErrInfo(Wind.Comm.Expo4.Message,System.String@)">
+            <summary>
+            从消息中获取错误信息
+            </summary>
+            <param name="msg">错误消息</param>
+            <param name="errInfo">错误信息</param>
+            <returns>错误码</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.isABTestingMsg(Wind.Comm.Expo4.Message)">
+            <summary>
+            判断消息是不是一个灰度消息
+            </summary>
+            <param name="msg">Expo消息</param>
+            <returns>true表示当前消息是一个灰度消息</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.SetABTestingFlag(Wind.Comm.Expo4.Message,System.Boolean)">
+            <summary>
+            设置消息的灰度标记
+            </summary>
+            <param name="msg"></param>
+            <param name="isABTesting"></param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.MessageV2Ex.ClearZipAndDesFlag(Wind.Comm.Expo4.Message)">
+            <summary>
+            去除消息中的压缩和加密标志位
+            </summary>
+            <param name="msg">Expo消息</param>
+        </member>
+        <member name="T:Wind.Comm.OnCommand">
+            <summary>
+            API命令处理代理定义
+            </summary>
+            <param name="command">命令信息类</param>
+            <returns>字节数组</returns>
+        </member>
+        <member name="T:Wind.Comm.OnNotifyCommand">
+            <summary>
+            广播/组播类命令处理代理定义
+            </summary>
+            <param name="command">命令定义</param>
+        </member>
+        <member name="T:Wind.Comm.OnLogInfo">
+            <summary>
+            日志输出代理定义
+            </summary>
+            <param name="sender">日志源</param>
+            <param name="message">日志信息</param>
+        </member>
+        <member name="T:Wind.Comm.OnReply">
+            <summary>
+            应答消息输出代理定义
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.OnProcessBusMessage">
+            <summary>
+            处理来自总线的消息函数
+            </summary>
+            <param name="msg">来自总线的消息</param>
+            <param name="continueProcess">true：在本函数中没有处理该总线消息，后续需要继续调用OnCommand，false:表示在本函数已经处理了总线消息，后续不需要OnCommand继续处理</param>
+        </member>
+        <member name="T:Wind.Comm.OnAsyncCallCompleted">
+            <summary>
+            异步消息完成时的回调函数定义
+            </summary>
+            <param name="responseMsg">回应消息</param>
+            <param name="state">请求消息的上下文对象</param>
+            <param name="succ">成功以否，超时和通用错误应答都设置为false</param>
+            <param name="errInfo">错误信息，如果通用错误消息，错误信息自动填充</param>
+        </member>
+        <member name="T:Wind.Comm.OnAsyncAllReturnCallCompleted">
+            <summary>
+            批量异步消息完成时的回调函数定义，允许批量异步发送请求，所有的请求返回或者超时的时候触发本回调函数
+            同批量同步消息调用不同，这里调用者线程不阻塞
+            </summary>
+            <param name="msgPairList">异步请求消息列表</param>
+            <param name="state">批量异步消息调用时候的上下文对象，通常包含原始请求消息，根据该原始请求消息分解对对其他多个服务的调用</param>
+            <param name="succ">所有消息成功返回，且没有通用错误应答的时候为true，否则为false</param>
+            <param name="errInfo">所有异步消息的错误信息汇总</param>
+        </member>
+        <member name="T:Wind.Comm.CommandHeader">
+            <summary>
+            命令头定义类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.AppClass">
+            <summary>
+            应用服务ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.CommandId">
+            <summary>
+            命令ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.Range">
+            <summary>
+            命令传递范围
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.UserID">
+            <summary>
+            执行者ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.DestUserId">
+            <summary>
+            目标用户ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.Principal">
+            <summary>
+            授权检查接口
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.CmdMainVersion">
+            <summary>
+            命令字主版本号
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.CmdSubVersion">
+            <summary>
+            命令字子版本号
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandHeader.DstAppAddr">
+            <summary>
+            Expo目标地址
+            
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CommandHeader.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.CommandHeader.#ctor(System.UInt32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="userId">命令执行者ID</param>
+        </member>
+        <member name="M:Wind.Comm.CommandHeader.#ctor(System.UInt32,System.UInt32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="appClass">应用服务ID</param>
+            <param name="commandId">命令ID</param>
+        </member>
+        <member name="M:Wind.Comm.CommandHeader.#ctor(System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="userId">命令执行者ID</param>
+            <param name="appClass">应用服务ID</param>
+            <param name="commandId">命令ID</param>
+        </member>
+        <member name="T:Wind.Comm.CommandItem">
+            <summary>
+            命令信息类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandItem.Header">
+            <summary>
+            命令头
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandItem.Attrs">
+            <summary>
+            Expo消息属性集合
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.CommandItem.ParamData">
+            <summary>
+            参数数据
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.ICommandProxy">
+            <summary>
+            命令执行代理
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.ICommandProxy.UserId">
+            <summary>
+            命令执行者ID
+            用于检查该用户是否具有执行该命令的权限
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.ICommandStub">
+            <summary>
+             命令执行存根
+             在命令执行存根处需要对用户进行授权检查，通过IPrincipal接口实现
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.ICommandStub.DoCommandStub(Wind.Comm.CommandHeader,System.Object[],System.Object[]@)">
+            <summary>
+            同步的方式调用功能，不建议使用本函数，建议使用Expo4中的异步回调功能
+            </summary>
+            <param name="header">Expo相关的头信息</param>
+            <param name="inputArgs">请求参数列表</param>
+            <param name="outputArgs">回应数据，如果发生错误自动引发异常</param>
+        </member>
+        <member name="T:Wind.Comm.DateHelper">
+            <summary>
+            日期帮助类
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.DateHelper.DELPHI_BASEDATE_TICKS">
+            <summary>
+            DELPHI日期基点
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.DateHelper.ToDate(System.String)">
+            <summary>
+            日期转换函数
+            </summary>
+            <param name="exp">YYYYMMDD</param>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.FixedString">
+            <summary>
+            定长字符串类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedString.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedString.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="length">长度</param>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToBoolean(System.IFormatProvider)">
+            <summary>
+            转换到bool，未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToByte(System.IFormatProvider)">
+            <summary>
+            转换到字节
+            </summary>
+            <param name="provider">无</param>
+            <returns>无</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToChar(System.IFormatProvider)">
+            <summary>
+            转换到字节，未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>char</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToDateTime(System.IFormatProvider)">
+            <summary>
+            转换到日期
+            </summary>
+            <param name="provider">格式</param>
+            <returns>日期</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToDecimal(System.IFormatProvider)">
+            <summary>
+            转换到数字，未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>数字</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToDouble(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>double</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToInt16(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>int16</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToInt32(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>int32</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToInt64(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>xxx</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToSByte(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">格式</param>
+            <returns>xxx</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToSingle(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">xxx</param>
+            <returns>xxx</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToString(System.IFormatProvider)">
+            <summary>
+            转换为字符串
+            </summary>
+            <param name="provider">任意</param>
+            <returns>字符串</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToType(System.Type,System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="conversionType">xxx</param>
+            <param name="provider">xxx</param>
+            <returns>xxx</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToUInt16(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">xxx</param>
+            <returns>xxx</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToUInt32(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">xxx</param>
+            <returns>xxx</returns>
+        </member>
+        <member name="M:Wind.Comm.FixedString.ToUInt64(System.IFormatProvider)">
+            <summary>
+            未实现
+            </summary>
+            <param name="provider">xxx</param>
+            <returns>xxx</returns>        
+        </member>
+        <member name="P:Wind.Comm.FixedString.Length">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.FixedString.Value">
+            <summary>
+            字符串值
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.HugeString">
+            <summary>
+            长文本类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.HugeString.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.HugeString.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">值</param>
+        </member>
+        <member name="P:Wind.Comm.HugeString.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.TDateTime">
+            <summary>
+            Delphi版日期类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.TDateTime.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.TDateTime.#ctor(System.DateTime)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">值</param>
+        </member>
+        <member name="M:Wind.Comm.TDateTime.ValueAsDateTime">
+            <summary>
+            获取对应的日期函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.TDateTime.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Char8Date">
+            <summary>
+            日期字符串类，继承自定长字符串类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Char8Date.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Char8Date.#ctor(System.DateTime)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">日期</param>
+        </member>
+        <member name="M:Wind.Comm.Char8Date.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">字符串</param>
+        </member>
+        <member name="M:Wind.Comm.Char8Date.ValueAsDateTime">
+            <summary>
+            获取日期值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Wind.Comm.FixedDataTypeAttribute">
+            <summary>
+            定长数据类型属性类
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.FixedDataTypeAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.FixedDataTypeAttribute.Length">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.JavaPacketHeader">
+            <summary>
+            Expo消息头结构
+            
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.CommandValue">
+            <summary>
+            命令字
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.CommandClass">
+            <summary>
+            appClassID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.DeliverType">
+            <summary>
+            广播，条件广播，转发
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.MessageType">
+            <summary>
+            回应、请求、通用错误
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.DealType">
+            <summary>
+            节点内，组内，组间
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.CmdVersion">
+            <summary>
+            命令字版本
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.AlgorithCode">
+            <summary>
+            算法，加密、压缩、灰度标记
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.ExtHeaderTag">
+            <summary>
+            扩展头标志
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.Rev1">
+            <summary>
+            保留，和C++的内存结构对齐
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.MessageBodyLen">
+            <summary>
+            消息体长度
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.PkgSerialNo">
+            <summary>
+            消息序列号
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.SourceAddr">
+            <summary>
+            源地址
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaPacketHeader.DestAddr">
+            <summary>
+            目标地址
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.JavaSkyHeader">
+            <summary>
+            Sky扩展头结构
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaSkyHeader.SerialNum">
+            <summary>
+            终端流水号
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaSkyHeader.SourceSocketHandle">
+            <summary>
+            终端连接句柄
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaSkyHeader.SourceUserID">
+            <summary>
+            终端用户ID
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaSkyHeader.DestSocketHandle">
+            <summary>
+            Sky使用
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaSkyHeader.DestUserID">
+            <summary>
+            Sky使用
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.JavaMessage">
+            <summary>
+            消息结构
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaMessage.PacketHeader">
+            <summary>
+            消息头结构
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaMessage.SkyHeader">
+            <summary>
+            扩展头结构
+            </summary>
+        </member>
+        <member name="F:Wind.Comm.Expo4.JavaMessage.MsgBody">
+            <summary>
+            消息体
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.JavaMessage.releaseMsgBody">
+            <summary>
+            释放在C#中创建的消息体内存
+            </summary>
+        </member>
+        <member name="T:Wind.Comm.Expo4.OnMBClientEventHandler">
+            <summary>
+            Expo总线事件委托
+            </summary>
+            <param name="mbClientName">连接配置名称</param>
+            <param name="code">事件码</param>
+            <param name="eventInfo">事件信息</param>
+        </member>
+        <member name="T:Wind.Comm.Expo4.OnMessageEvent">
+            <summary>
+            Expo总线消息到达处理委托
+            </summary>
+            <param name="mbClientName">连接配置名称</param>
+            <param name="msg">到达的消息对象</param>
+        </member>
+        <member name="T:Wind.Comm.Expo4.Expo4Warper">
+            <summary>
+            使用PInvoke方式的Expo4的包装库
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.#ctor">
+            <summary>
+            默认连接配置名称为default
+            </summary>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.#ctor(System.String)">
+            <summary>
+            使用给定连接配置名称进行初始化
+            </summary>
+            <param name="configName"></param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.addDefaultMBConfig(System.String,Wind.Comm.Expo4.IMBMessageV2Listener)">
+            <summary>
+            添加默认的连接配置和对应的消息处理对象
+            </summary>
+            <param name="url"></param>
+            <param name="listener"></param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.GetListener">
+            <summary>
+            获取默认的消息处理对象
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.CreateNextSerialNo">
+            <summary>
+            在给定配置的连接上获取下一次可以使用的异步流水号
+            </summary>
+            <returns>可用的流水号</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.CreateNextSyncSerialNo">
+            <summary>
+            在当前连接上获取下一次可以使用的同步流水号，该同步流水号非接口库同步流水号，对于系统接口来说，还是一个异步流水号
+            在本模块中是为了在上层实现同步消息调用所采用的流水号
+            </summary>
+            <returns>可用的异步流水号</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.GetSyncSerialNoScale(System.UInt32@,System.UInt32@)">
+            <summary>
+            获取同步消息使用的流水号范围
+            </summary>
+            <param name="minSyncNo">最小可用流水号</param>
+            <param name="maxSyncNo">最大可用流水号</param>        
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.AttechHttpABTestingFlag(Wind.Comm.Expo4.Message)">
+            <summary>
+            在IIS的运行环境下，对请求类消息根据WEB当前上下文用户的灰度标志，对发出的消息设置灰度记号
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.PostMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            在给定配置的连接上异步发送基于V2的Expo消息
+            </summary>
+            <param name="msg">基于C#的托管ExpoV2消息对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.PostMessage(Wind.Comm.Expo4.Message,System.UInt32@)">
+            <summary>
+            根据给定的流水号发送消息
+            </summary>
+            <param name="msg">要发送的消息</param>
+            <param name="serialNo">指定流水号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.SendMessage(Wind.Comm.Expo4.Message,Wind.Comm.Expo4.Message@,System.Int32,System.Text.StringBuilder@)">
+            <summary>
+            同步消息
+            </summary>
+            <param name="requestMsg">请求消息</param>
+            <param name="responseMsg">回应消息</param>
+            <param name="milliseconds">超时时间</param>
+            <param name="errInfo">错误信息</param>
+            <returns>成功标记</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.broadcastMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            发送全网广播消息，不支持灰度
+            </summary>
+            <param name="msg">要广播的消息</param>
+            <returns>成功标记</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.condBroadcastMessage(Wind.Comm.Expo4.Message)">
+            <summary>
+            发送条件广播消息，不支持灰度
+            </summary>
+            <param name="msg">要广播的消息</param>
+            <returns>成功标记</returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.start">
+            <summary>
+            启动，连接到总线
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Wind.Comm.Expo4.Expo4Warper.stop">
+            <summary>
+            停止，从总线断开
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Wind.Comm.Expo4.Expo4Warper.DefaultAppClassID">
+            <summary>
+            在当前连接上获取注册的appClassID
+            </summary>
+        </member>
+        <member name="P:Wind.Comm.Expo4.Expo4Warper.AppAddress">
+            <summary>
+            获取当前连接在总线注册后总线分配的地址
+            </summary>
+        </member>
+    </members>
+</doc>

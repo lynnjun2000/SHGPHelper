@@ -1,0 +1,15 @@
+D:\workres\projects\GP\ImgGPLib\bin\Debug\ImgGPLib.dll
+D:\workres\projects\GP\ImgGPLib\bin\Debug\ImgGPLib.pdb
+D:\workres\projects\GP\ImgGPLib\obj\Debug\ResolveAssemblyReference.cache
+D:\workres\projects\GP\ImgGPLib\obj\Debug\ImgGPLib.dll
+D:\workres\projects\GP\ImgGPLib\obj\Debug\ImgGPLib.pdb
+G:\projects\GP\ImgGPLib\bin\Debug\ImgGPLib.dll
+G:\projects\GP\ImgGPLib\bin\Debug\ImgGPLib.pdb
+G:\projects\GP\ImgGPLib\obj\Debug\ResolveAssemblyReference.cache
+G:\projects\GP\ImgGPLib\obj\Debug\ImgGPLib.dll
+G:\projects\GP\ImgGPLib\obj\Debug\ImgGPLib.pdb
+G:\projects\GP_20170912\ImgGPLib\bin\Debug\ImgGPLib.dll
+G:\projects\GP_20170912\ImgGPLib\bin\Debug\ImgGPLib.pdb
+G:\projects\GP_20170912\ImgGPLib\obj\Debug\ResolveAssemblyReference.cache
+G:\projects\GP_20170912\ImgGPLib\obj\Debug\ImgGPLib.dll
+G:\projects\GP_20170912\ImgGPLib\obj\Debug\ImgGPLib.pdb
