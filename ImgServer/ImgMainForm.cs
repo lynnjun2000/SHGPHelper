@@ -253,6 +253,7 @@ namespace ImgServer
             _server.LogHandler += new OnLogInfo(OnLogInfo);
             OriMsgProcessor msgProcessor = new OriMsgProcessor(_server,this);
             msgProcessor.BroadcastMessageHandler += new ProcessBroadcastMessageHandler(_teamAdmin.OnBroadcastMessage);
+            msgProcessor.CondBroadcastMessageHandler += new ProcessCondBroadcastMessageHandler(_teamAdmin.OnCondBroadcastMessage);
             msgProcessor.LogHandler += new OnLogInfo(OnLogInfo);
             //_server.BusMessageProcessHandler += new OnProcessBusMessage(msgProcessor.OnProcessBusMessage);
             _server.BusMessageProcessHandler += new OnProcessBusMessage(msgProcessor.OnProcessBusMessage);
@@ -266,7 +267,8 @@ namespace ImgServer
             private IPassiveAppServer _intf;
             private ImgMainForm _mainForm;
             public OnLogInfo LogHandler { get; set; }
-            public virtual ProcessBroadcastMessageHandler BroadcastMessageHandler { get; set; }  
+            public virtual ProcessBroadcastMessageHandler BroadcastMessageHandler { get; set; }
+            public virtual ProcessCondBroadcastMessageHandler CondBroadcastMessageHandler { get; set; }
             public OriMsgProcessor(IPassiveAppServer intf, ImgMainForm mainForm)
             {
                 this._intf = intf;
@@ -338,9 +340,18 @@ namespace ImgServer
                             catch (Exception ee)
                             {
                             }
-                             */ 
+                             */
                         }
                         //Console.WriteLine(revPrice);
+                    }
+                    else
+                    {
+                        if (CondBroadcastMessageHandler != null)
+                        {
+                            CondBroadcastMessageHandler(msg);
+                            continueProcess = false;
+                            return;
+                        }
                     }
                     
                 }
@@ -898,6 +909,7 @@ namespace ImgServer
 
         private void ImgMainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _teamAdmin.logoutFromServer();
             this._threadStop = true;
             _priceCapThread.Join();
             if (this._server != null)
@@ -905,6 +917,7 @@ namespace ImgServer
                 this._server.Stop();
             }
             _serverIPRefreshThread.Join();
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -1706,14 +1719,136 @@ namespace ImgServer
 
         private void btLogin_Click(object sender, EventArgs e)
         {
-            if (tbUser.Text.Trim().Length == 0)
+            string userID = tbUser.Text.Trim();
+            if (userID.Length == 0)
             {
                 MessageBox.Show("用户不能为空，可以为中文，只是用于标识身份","警告");
+                return;
+            }
+            if (!_teamAdmin.loginToServer(userID))
+            {
+                MessageBox.Show("用户:" + userID + "不能登录，一般来说，该用户名称已经被占用", "警告");
+                return;
+            }
+            else
+            {
+                btLogin.Enabled = false;
+            }
+        }
+
+        private void BuildUserPolicyData(object userData)
+        {
+            UserPolicyData policyData = userData as UserPolicyData;
+            if (policyData != null)
+            {
+                policyData.OfferTime = dtAutoBid.Value.Minute;
+                policyData.OfferTime += dtAutoBid.Value.Second / 100.0;
+
+                policyData.PriceMarkup = tbIncPrice.Text.Trim();
+
+                policyData.Submit400 = dtAutoCommit400.Value.Second;
+                policyData.Submit400 += Convert.ToInt32(tbAutoCommitMS400.Text) / 1000.0;
+
+                policyData.Submit500 = dtAutoCommit500.Value.Second;
+                policyData.Submit500 += Convert.ToInt32(tbAutoCommitMS500.Text) / 1000.0;
+
+                policyData.SubmitForce = dtAutoCommit2.Value.Second;
+                policyData.SubmitForce += Convert.ToInt32(tbAutoCommitMS2.Text) / 1000.0;
+
+                policyData.ServerIP = tbServerIPInfo.Text.Trim();
+
+            }
+        }
+
+        private void UserIsInList(object userState)
+        {
+            UserState userInfo = userState as UserState;
+            if (userInfo != null)
+            {
+                foreach (ListViewItem item in lvUser.Items)
+                {
+                    if (item.Text.Equals(userInfo.UserID, StringComparison.OrdinalIgnoreCase))
+                    {
+                        userInfo.Exists = true;
+                        return;
+                    }
+                }
+                userInfo.Exists = false;
+            }
+        }
+
+        private void UpdatePolicyList(object userData)
+        {
+            UserPolicyData policyData = userData as UserPolicyData;
+            if (policyData != null)
+            {
+                if (policyData.RemoveSelf)
+                {                    
+                    foreach (ListViewItem item in lvUser.Items)
+                    {
+                        if (item.Text.Equals(policyData.UserID, StringComparison.OrdinalIgnoreCase))
+                        {
+                            lvUser.Items.Remove(item);
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    //add or update
+                    foreach (ListViewItem item in lvUser.Items)
+                    {
+                        if (item.Text.Equals(policyData.UserID, StringComparison.OrdinalIgnoreCase))
+                        {
+                            //update
+                            item.SubItems[1].Text = policyData.OfferTime.ToString();
+                            item.SubItems[2].Text = policyData.PriceMarkup.ToString();
+                            item.SubItems[3].Text = policyData.Submit400.ToString();
+                            item.SubItems[4].Text = policyData.Submit500.ToString();
+                            item.SubItems[5].Text = policyData.SubmitForce.ToString();
+                            item.SubItems[6].Text = policyData.ServerIP.ToString();
+                            return;
+                        }
+                    }
+                    //add
+                    ListViewItem item1 = new ListViewItem();
+                    item1.Text = policyData.UserID;
+
+                    item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.OfferTime.ToString()));
+                    item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.PriceMarkup.ToString()));
+                    item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.Submit400.ToString()));
+                    item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.Submit500.ToString()));
+                    item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.SubmitForce.ToString()));
+                    item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.ServerIP.ToString()));
+                    lvUser.Items.Add(item1);
+
+                }
             }
         }
 
 
 
+        #region IInfomationControl Members
 
+        public void SyncGetSelfPolicyData(ref UserPolicyData policyData)
+        {
+            _SyncContext.Send(BuildUserPolicyData, policyData);
+        }
+
+        public void SyncUpdatePolicyList(ref UserPolicyData policyData)
+        {
+            _SyncContext.Post(UpdatePolicyList, policyData);
+        }
+
+        public bool SyncCheckUserExists(string userID)
+        {
+            UserState userState = new UserState();
+            userState.UserID = userID;
+            userState.Exists = false;
+            _SyncContext.Send(UserIsInList, userState);
+            return userState.Exists;
+        }
+
+        #endregion
     }
 }

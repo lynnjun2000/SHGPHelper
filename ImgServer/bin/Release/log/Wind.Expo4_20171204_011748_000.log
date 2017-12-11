@@ -1,9 +1,0 @@
-2017-12-04 14:00:51.842 INFO  ExpoClient not open Dump 
-2017-12-04 14:00:51.857 INFO  Libevent version is 2.0.21-stable. 
-2017-12-04 14:00:51.857 INFO  The platform's Avalibale methods are:win32; 
-2017-12-04 14:00:53.113 INFO  connect to 23.106.155.234:9008 ok 
-2017-12-04 14:00:53.256 INFO  now send Expo reg message to 23.106.155.234:9008 
-2017-12-04 14:00:53.508 INFO  App connected and registering to 23.106.155.234:9008 registed address is G1S3A9883
- 
-2017-12-04 14:00:53.758 INFO  AppRequestABTest appClassID=3100,AppAddress=G1S3A9883,isABTesting=0 
-2017-12-04 14:01:09.266 INFO  Session begin Destroy from 23.106.155.234:9008 

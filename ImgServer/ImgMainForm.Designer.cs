@@ -45,10 +45,16 @@
             this.tbWebStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.webLoadProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.lbServerIP = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tbServerIPInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btChangeServerIP = new System.Windows.Forms.ToolStripSplitButton();
+            this.btSyncTimer = new System.Windows.Forms.ToolStripSplitButton();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pcMain = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.btLogin = new System.Windows.Forms.Button();
+            this.tbUser = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -168,17 +174,8 @@
             this.tbPriceInputPos = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.WebControlLocationtimer = new System.Windows.Forms.Timer(this.components);
-            this.tbServerIPInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btChangeServerIP = new System.Windows.Forms.ToolStripSplitButton();
-            this.btSyncTimer = new System.Windows.Forms.ToolStripSplitButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbUser = new System.Windows.Forms.TextBox();
-            this.btLogin = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabUsers = new System.Windows.Forms.TabPage();
-            this.tabTalk = new System.Windows.Forms.TabPage();
-            this.plUserControl = new System.Windows.Forms.Panel();
             this.lvUser = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -187,11 +184,14 @@
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+            this.plUserControl = new System.Windows.Forms.Panel();
+            this.tabTalk = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button11 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.WebControlLocationtimer = new System.Windows.Forms.Timer(this.components);
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -371,6 +371,32 @@
             this.lbServerIP.Size = new System.Drawing.Size(59, 18);
             this.lbServerIP.Text = "ServerIP:";
             // 
+            // tbServerIPInfo
+            // 
+            this.tbServerIPInfo.Name = "tbServerIPInfo";
+            this.tbServerIPInfo.Size = new System.Drawing.Size(83, 18);
+            this.tbServerIPInfo.Text = "serverip:port";
+            // 
+            // btChangeServerIP
+            // 
+            this.btChangeServerIP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btChangeServerIP.Image = ((System.Drawing.Image)(resources.GetObject("btChangeServerIP.Image")));
+            this.btChangeServerIP.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btChangeServerIP.Name = "btChangeServerIP";
+            this.btChangeServerIP.Size = new System.Drawing.Size(84, 21);
+            this.btChangeServerIP.Text = "切换服务器";
+            this.btChangeServerIP.ButtonClick += new System.EventHandler(this.btChangeServerIP_ButtonClick);
+            // 
+            // btSyncTimer
+            // 
+            this.btSyncTimer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btSyncTimer.Image = ((System.Drawing.Image)(resources.GetObject("btSyncTimer.Image")));
+            this.btSyncTimer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btSyncTimer.Name = "btSyncTimer";
+            this.btSyncTimer.Size = new System.Drawing.Size(72, 21);
+            this.btSyncTimer.Text = "时间同步";
+            this.btSyncTimer.ButtonClick += new System.EventHandler(this.btSyncTimer_ButtonClick);
+            // 
             // webBrowser1
             // 
             this.webBrowser1.AllowWebBrowserDrop = false;
@@ -433,6 +459,34 @@
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "信息识别";
             this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // btLogin
+            // 
+            this.btLogin.Location = new System.Drawing.Point(396, 27);
+            this.btLogin.Name = "btLogin";
+            this.btLogin.Size = new System.Drawing.Size(51, 23);
+            this.btLogin.TabIndex = 9;
+            this.btLogin.Tag = "";
+            this.btLogin.Text = "登录";
+            this.btLogin.UseVisualStyleBackColor = true;
+            this.btLogin.Click += new System.EventHandler(this.btLogin_Click);
+            // 
+            // tbUser
+            // 
+            this.tbUser.Location = new System.Drawing.Point(314, 27);
+            this.tbUser.Name = "tbUser";
+            this.tbUser.Size = new System.Drawing.Size(76, 23);
+            this.tbUser.TabIndex = 8;
+            this.tbUser.Text = "陈松";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(273, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 14);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "用户";
             // 
             // groupBox4
             // 
@@ -1646,63 +1700,6 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "价格输入框";
             // 
-            // WebControlLocationtimer
-            // 
-            this.WebControlLocationtimer.Tick += new System.EventHandler(this.WebControlLocationtimer_Tick);
-            // 
-            // tbServerIPInfo
-            // 
-            this.tbServerIPInfo.Name = "tbServerIPInfo";
-            this.tbServerIPInfo.Size = new System.Drawing.Size(83, 18);
-            this.tbServerIPInfo.Text = "serverip:port";
-            // 
-            // btChangeServerIP
-            // 
-            this.btChangeServerIP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btChangeServerIP.Image = ((System.Drawing.Image)(resources.GetObject("btChangeServerIP.Image")));
-            this.btChangeServerIP.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btChangeServerIP.Name = "btChangeServerIP";
-            this.btChangeServerIP.Size = new System.Drawing.Size(84, 21);
-            this.btChangeServerIP.Text = "切换服务器";
-            this.btChangeServerIP.ButtonClick += new System.EventHandler(this.btChangeServerIP_ButtonClick);
-            // 
-            // btSyncTimer
-            // 
-            this.btSyncTimer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btSyncTimer.Image = ((System.Drawing.Image)(resources.GetObject("btSyncTimer.Image")));
-            this.btSyncTimer.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btSyncTimer.Name = "btSyncTimer";
-            this.btSyncTimer.Size = new System.Drawing.Size(72, 21);
-            this.btSyncTimer.Text = "时间同步";
-            this.btSyncTimer.ButtonClick += new System.EventHandler(this.btSyncTimer_ButtonClick);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(273, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 14);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "用户";
-            // 
-            // tbUser
-            // 
-            this.tbUser.Location = new System.Drawing.Point(314, 27);
-            this.tbUser.Name = "tbUser";
-            this.tbUser.Size = new System.Drawing.Size(76, 23);
-            this.tbUser.TabIndex = 8;
-            this.tbUser.Text = "陈松";
-            // 
-            // btLogin
-            // 
-            this.btLogin.Location = new System.Drawing.Point(396, 27);
-            this.btLogin.Name = "btLogin";
-            this.btLogin.Size = new System.Drawing.Size(51, 23);
-            this.btLogin.TabIndex = 9;
-            this.btLogin.Text = "登录";
-            this.btLogin.UseVisualStyleBackColor = true;
-            this.btLogin.Click += new System.EventHandler(this.btLogin_Click);
-            // 
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabUsers);
@@ -1726,26 +1723,6 @@
             this.tabUsers.Text = "在线用户";
             this.tabUsers.UseVisualStyleBackColor = true;
             // 
-            // tabTalk
-            // 
-            this.tabTalk.Controls.Add(this.richTextBox1);
-            this.tabTalk.Controls.Add(this.panel1);
-            this.tabTalk.Location = new System.Drawing.Point(4, 24);
-            this.tabTalk.Name = "tabTalk";
-            this.tabTalk.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTalk.Size = new System.Drawing.Size(472, 400);
-            this.tabTalk.TabIndex = 1;
-            this.tabTalk.Text = "聊天信息";
-            this.tabTalk.UseVisualStyleBackColor = true;
-            // 
-            // plUserControl
-            // 
-            this.plUserControl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.plUserControl.Location = new System.Drawing.Point(3, 355);
-            this.plUserControl.Name = "plUserControl";
-            this.plUserControl.Size = new System.Drawing.Size(466, 42);
-            this.plUserControl.TabIndex = 0;
-            // 
             // lvUser
             // 
             this.lvUser.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -1757,6 +1734,8 @@
             this.columnHeader6,
             this.columnHeader7});
             this.lvUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUser.FullRowSelect = true;
+            this.lvUser.HideSelection = false;
             this.lvUser.Location = new System.Drawing.Point(3, 3);
             this.lvUser.Name = "lvUser";
             this.lvUser.Size = new System.Drawing.Size(466, 352);
@@ -1793,26 +1772,47 @@
             this.columnHeader7.Text = "Server";
             this.columnHeader7.Width = 100;
             // 
+            // plUserControl
+            // 
+            this.plUserControl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.plUserControl.Location = new System.Drawing.Point(3, 355);
+            this.plUserControl.Name = "plUserControl";
+            this.plUserControl.Size = new System.Drawing.Size(466, 42);
+            this.plUserControl.TabIndex = 0;
+            // 
+            // tabTalk
+            // 
+            this.tabTalk.Controls.Add(this.richTextBox1);
+            this.tabTalk.Controls.Add(this.panel1);
+            this.tabTalk.Location = new System.Drawing.Point(4, 22);
+            this.tabTalk.Name = "tabTalk";
+            this.tabTalk.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTalk.Size = new System.Drawing.Size(472, 402);
+            this.tabTalk.TabIndex = 1;
+            this.tabTalk.Text = "聊天信息";
+            this.tabTalk.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+            this.richTextBox1.Size = new System.Drawing.Size(466, 327);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.button11);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(3, 328);
+            this.panel1.Location = new System.Drawing.Point(3, 330);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(466, 69);
             this.panel1.TabIndex = 0;
-            // 
-            // button11
-            // 
-            this.button11.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button11.Location = new System.Drawing.Point(389, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 67);
-            this.button11.TabIndex = 1;
-            this.button11.Text = "Send";
-            this.button11.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -1832,16 +1832,19 @@
             this.textBox1.Size = new System.Drawing.Size(389, 67);
             this.textBox1.TabIndex = 0;
             // 
-            // richTextBox1
+            // button11
             // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-            this.richTextBox1.Size = new System.Drawing.Size(466, 325);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.button11.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button11.Location = new System.Drawing.Point(389, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(75, 67);
+            this.button11.TabIndex = 1;
+            this.button11.Text = "Send";
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // WebControlLocationtimer
+            // 
+            this.WebControlLocationtimer.Tick += new System.EventHandler(this.WebControlLocationtimer_Tick);
             // 
             // ImgMainForm
             // 
