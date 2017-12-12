@@ -55,6 +55,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormPolicyEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPolicyEdit.Designer.cs">
+      <DependentUpon>FormPolicyEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Net\MyDateTime.cs" />
     <Compile Include="Net\TCPConnHelper.cs" />
     <Compile Include="Net\UserAdmin.cs" />
     <Compile Include="nodes.Designer.cs">
@@ -79,6 +86,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormPolicyEdit.resx">
+      <DependentUpon>FormPolicyEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImgMainForm.resx">
       <DependentUpon>ImgMainForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -44,9 +44,8 @@ namespace ImgServer.Net
             RemoveSelf = false;
         }
 
-        public UserPolicyData(Message msg)
-        {
-            MessageV2ReaderHelper reader = new MessageV2ReaderHelper(msg);
+        public UserPolicyData(MessageV2ReaderHelper reader)
+        {            
             UserID = reader.ReadStr();
             OfferTime = reader.ReadDouble();
             PriceMarkup = reader.ReadStr();
@@ -93,7 +92,7 @@ namespace ImgServer.Net
         public virtual bool Exists { get; set; }
     }
 
-    interface IInfomationControl
+    public interface IInfomationControl
     {
         /// <summary>
         /// 线程安全方式同步界面上的数据到UserPolicyData对象
@@ -109,10 +108,16 @@ namespace ImgServer.Net
         void SyncUpdatePolicyList(ref UserPolicyData policyData);
 
         bool SyncCheckUserExists(string userID);
+        void ChangeServerIP();
+        /// <summary>
+        /// 异步更新主界面上的用户报价策略控件
+        /// </summary>
+        /// <param name="policyData"></param>
+        void AsyncUpdatePolicy(string adminUserID, ref UserPolicyData policyData);
     }
 
 
-    class UserAdmin
+    public class UserAdmin
     {
         private IAppServer _server;
         private IInfomationControl _UIControl;
@@ -122,7 +127,10 @@ namespace ImgServer.Net
         private Thread _PolicyBroadcastThread = null;
         private Thread _userActiveCheckThread = null;
 
-        public   const uint   LOGMSGID = 4001;
+        public const uint   LOGMSGID = 4001;
+        public const uint   CHATMSGID = 4002;
+        public const uint   CHANGESERVERMSGID = 4003;
+        public const uint   CHANGEPOLICYMSGID = 4004;
 
         /// <summary>
         /// <UID,LastActiveTime>
@@ -147,6 +155,14 @@ namespace ImgServer.Net
         {
             _UIControl = uiControl;
             _server = server;
+        }
+
+        public IAppServer Server
+        {
+            get
+            {
+                return _server;
+            }
         }
 
         private void UpdateUserOnlineInfo(string uid)
@@ -201,12 +217,14 @@ namespace ImgServer.Net
             }
         }
 
+
         public bool loginToServer(string userID)
         {
             if (_logined) return true;
             if (_UIControl.SyncCheckUserExists(userID)) return false;
             if (_PolicyBroadcastThread != null) return false;
             
+
             _PolicyBroadcastThread = new Thread( (obj)=>{
                 while (true)
                 {
@@ -231,7 +249,7 @@ namespace ImgServer.Net
                 
             });
             _PolicyBroadcastThread.Start(userID);
-
+            _userID = userID;
             _logined = true;
 
             return _logined;
@@ -250,6 +268,17 @@ namespace ImgServer.Net
             _logined = false;
         }
 
+        public void NotifyChangeServer(string userID)
+        {
+            Message msg = new Message();
+            msg.SetCommand(3100, CHANGESERVERMSGID);
+            MessageV2BuilderHelper helper = new MessageV2BuilderHelper();
+            helper.WriteString(userID);
+            msg.setMsgBody(helper.GetMsgBody());
+            _server.conBroadcast(msg, PacketHeader.ExpoDealType.InterGroup);
+        }
+
+
         /// <summary>
         /// 不同用户之间的聊天，在线状态，报价策略信息在本类中使用全网广播的方式通知其他用户
         /// 所以在本函数中处理这些消息，由于在不同的线程中，所有界面的刷新和信息提取都通过接口IInfomationControl进行操作
@@ -267,7 +296,8 @@ namespace ImgServer.Net
             {
                 case LOGMSGID:
                     {
-                        UserPolicyData policyData = new UserPolicyData(msg);
+                        MessageV2ReaderHelper reader = new MessageV2ReaderHelper(msg);
+                        UserPolicyData policyData = new UserPolicyData(reader);
                         if (!policyData.RemoveSelf)
                         {
                             UpdateUserOnlineInfo(policyData.UserID);
@@ -284,6 +314,27 @@ namespace ImgServer.Net
                             }
                         }
                         _UIControl.SyncUpdatePolicyList(ref policyData);
+                        break;
+                    }
+                case CHANGESERVERMSGID:
+                    {
+                        MessageV2ReaderHelper reader = new MessageV2ReaderHelper(msg);
+                        string userID = reader.ReadStr();
+                        if (userID.Equals(_userID, StringComparison.OrdinalIgnoreCase))
+                        {
+                            _UIControl.ChangeServerIP();
+                        }
+                        break;
+                    }
+                case CHANGEPOLICYMSGID:
+                    {
+                        MessageV2ReaderHelper reader = new MessageV2ReaderHelper(msg);
+                        string adminUserID = reader.ReadStr();
+                        UserPolicyData policyData = new UserPolicyData(reader);
+                        if (policyData.UserID.Equals(_userID, StringComparison.OrdinalIgnoreCase))
+                        {
+                            _UIControl.AsyncUpdatePolicy(adminUserID, ref policyData);
+                        }
                         break;
                     }
                 default:

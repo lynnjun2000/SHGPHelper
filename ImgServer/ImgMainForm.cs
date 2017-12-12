@@ -37,93 +37,6 @@ namespace ImgServer
             public bool isSelf { get; set; }
         }
 
-        private class MyDateTime
-        {
-            public int Year;
-            public int Month;
-            public int Day;
-            public int Hour;
-            public int Minute;
-            public int Second;
-            public int MSec;
-
-            public MyDateTime(DateTime dt)
-            {
-                Year = dt.Year;
-                Month = dt.Month;
-                Day = dt.Day;
-                Hour = dt.Hour;
-                Minute = dt.Minute;
-                Second = dt.Second;
-                MSec = dt.Millisecond;
-            }
-
-            public MyDateTime()
-            {
-                Year = DateTime.Now.Year;
-                Month = DateTime.Now.Month;
-                Day = DateTime.Now.Day;
-                Hour = DateTime.Now.Hour;
-                Minute = DateTime.Now.Minute;
-                Second = DateTime.Now.Second;
-                MSec = DateTime.Now.Millisecond;
-            }
-            public DateTime ToDateTime()
-            {
-                return new DateTime(Year, Month, Day, Hour, Minute, Second, MSec);
-            }
-            public static DateTime GetDefaultBidTime()
-            {
-                MyDateTime myTime = new MyDateTime();
-                myTime.Hour = 11;
-                myTime.Minute = 29;
-                myTime.Second = 47;
-                myTime.MSec = 0;
-                return myTime.ToDateTime();
-            }
-
-            public static DateTime GetDefaultCommitTime1()
-            {
-                MyDateTime myTime = new MyDateTime();
-                myTime.Hour = 11;
-                myTime.Minute = 29;
-                myTime.Second = 51;
-                myTime.MSec = 0;
-                return myTime.ToDateTime();
-            }
-
-            public static DateTime GetDefaultCommitTime2()
-            {
-                MyDateTime myTime = new MyDateTime();
-                myTime.Hour = 11;
-                myTime.Minute = 29;
-                myTime.Second = 54;
-                myTime.MSec = 0;
-                return myTime.ToDateTime();
-            }
-
-            public static DateTime GetDefaultCommitTime400()
-            {
-                MyDateTime myTime = new MyDateTime();
-                myTime.Hour = 11;
-                myTime.Minute = 29;
-                myTime.Second = 54;
-                myTime.MSec = 0;
-                return myTime.ToDateTime();
-            }
-
-            public static DateTime GetDefaultCommitTime500()
-            {
-                MyDateTime myTime = new MyDateTime();
-                myTime.Hour = 11;
-                myTime.Minute = 29;
-                myTime.Second = 54;
-                myTime.MSec = 500;
-                return myTime.ToDateTime();
-            }
-
-
-        }
         private string _stdFontLibFileName = "StdFontLib.dat";
         private StdFontLib _stdFontLib;
         private CodeFontLib _codeFontLib;
@@ -162,6 +75,9 @@ namespace ImgServer
         private Thread _serverIPRefreshThread = null;
 
         private UserAdmin _teamAdmin = null;
+        private bool _disableUIFunc = false;
+
+        FormPolicyEdit editForm = null;
 
         #region 键盘和鼠标操作函数，从系统库中导入
 
@@ -237,7 +153,8 @@ namespace ImgServer
             _teamAdmin = new UserAdmin();
             startExpoServer();
             _teamAdmin.bind(this, _server);
-
+            editForm = new FormPolicyEdit();
+            editForm.TermAdmin = _teamAdmin;
             
         }
 
@@ -909,8 +826,6 @@ namespace ImgServer
 
         private void ImgMainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _teamAdmin.StopCheckThread();
-            _teamAdmin.logoutFromServer();
             this._threadStop = true;
             _priceCapThread.Join();
             if (this._server != null)
@@ -1708,7 +1623,7 @@ namespace ImgServer
 
         private void btChangeServerIP_ButtonClick(object sender, EventArgs e)
         {
-            TCPConnHelper.disconnect8300();
+            ChangeServerIP();            
         }
 
         private void btSyncTimer_ButtonClick(object sender, EventArgs e)
@@ -1734,11 +1649,15 @@ namespace ImgServer
             else
             {
                 btLogin.Enabled = false;
+                tbUser.Enabled = false;
+                editForm.AdminUserID = userID;
             }
         }
 
+        
         private void BuildUserPolicyData(object userData)
         {
+            if (_disableUIFunc) return;
             UserPolicyData policyData = userData as UserPolicyData;
             if (policyData != null)
             {
@@ -1760,6 +1679,21 @@ namespace ImgServer
 
             }
         }
+
+        private void changePolicyFromNet(object obj)
+        {
+            UserPolicyData policyData = obj as UserPolicyData;
+            if (policyData != null)
+            {
+                tbIncPrice.Text = policyData.PriceMarkup;
+                FormPolicyEdit.resetTimePickerValue_1(dtAutoBid, policyData.OfferTime);
+                FormPolicyEdit.resetTimePickerValue_2(dtAutoCommit400, tbAutoCommitMS400, policyData.Submit400);
+                FormPolicyEdit.resetTimePickerValue_2(dtAutoCommit500, tbAutoCommitMS500, policyData.Submit500);
+                FormPolicyEdit.resetTimePickerValue_2(dtAutoCommit2, tbAutoCommitMS2, policyData.SubmitForce);
+
+            }
+        }
+
 
         private void UserIsInList(object userState)
         {
@@ -1827,7 +1761,21 @@ namespace ImgServer
             }
         }
 
-
+        private bool CheckIsOtherUser(out string uid)
+        {
+            uid = "";
+            if (lvUser.Items.Count == 0) return false;
+            if (lvUser.SelectedItems.Count == 0) return false;
+            if (lvUser.SelectedItems[0].Text.Equals(tbUser.Text.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            else
+            {
+                uid = lvUser.SelectedItems[0].Text;
+            }
+            return true;
+        }
 
         #region IInfomationControl Members
 
@@ -1850,6 +1798,84 @@ namespace ImgServer
             return userState.Exists;
         }
 
+        public void ChangeServerIP()
+        {
+            Console.WriteLine("收到断开当前服务器连接进行切换的命令");
+            TCPConnHelper.disconnect8300();
+        }
+
+        public void AsyncUpdatePolicy(string adminUserID, ref UserPolicyData policyData)
+        {
+            Console.WriteLine("收到来自" + adminUserID + "的策略调整命令");
+            _SyncContext.Post(changePolicyFromNet, policyData);
+        }
+
         #endregion
+
+
+        private void cmItemChangeServer_Click(object sender, EventArgs e)
+        {
+            string uid;
+            if (CheckIsOtherUser(out uid))
+            {
+                _teamAdmin.NotifyChangeServer(uid);
+                //MessageBox.Show(uid);
+            }
+        }
+
+        private void ImgMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _disableUIFunc = true;
+            _teamAdmin.StopCheckThread();
+            _teamAdmin.logoutFromServer();
+
+        }
+
+        private bool buildSelectUserPolicyData(out UserPolicyData policyData)
+        {
+            policyData = new UserPolicyData();
+            ListViewItem item = lvUser.SelectedItems[0];
+            try
+            {
+                policyData.OfferTime = Convert.ToDouble(item.SubItems[1].Text);
+                policyData.PriceMarkup = item.SubItems[2].Text;
+                policyData.Submit400 = Convert.ToDouble(item.SubItems[3].Text);
+                policyData.Submit500 = Convert.ToDouble(item.SubItems[4].Text);
+                policyData.SubmitForce = Convert.ToDouble(item.SubItems[5].Text);
+                return true;
+            }catch(Exception e) {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("从用户列表中解析策略数据失败，").Append(e.Message);
+                Console.WriteLine(sb.ToString());
+                return false;
+            }
+
+        }
+
+        private void cmItemModifyPolicy_Click(object sender, EventArgs e)
+        {
+            string uid;
+            if (CheckIsOtherUser(out uid))
+            {
+                editForm.Text = "【" + uid + "】策略修改";
+                editForm.UserID = uid;
+                //editForm.Location = lvUser.PointToClient(Cursor.Position);            
+                Point showPoint = Cursor.Position;
+                showPoint.X = userContextMenu.Left;
+                showPoint.Y = userContextMenu.Top;
+
+                editForm.Location = showPoint;
+
+                UserPolicyData policyData;
+                buildSelectUserPolicyData(out policyData);
+                policyData.UserID = uid;
+                editForm.initParam(policyData);
+                editForm.Show();
+            }
+            
+        }
+
+
+
     }
 }

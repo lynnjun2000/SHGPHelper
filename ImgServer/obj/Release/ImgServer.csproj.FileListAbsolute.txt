@@ -16,3 +16,4 @@ D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.WinScree
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.csproj.GenerateResource.Cache
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.exe
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.pdb
+D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.FormPolicyEdit.resources

@@ -184,6 +184,10 @@
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+            this.userContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmItemChangeServer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmItemModifyPolicy = new System.Windows.Forms.ToolStripMenuItem();
             this.plUserControl = new System.Windows.Forms.Panel();
             this.tabTalk = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -227,6 +231,7 @@
             this.groupBox2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabUsers.SuspendLayout();
+            this.userContextMenu.SuspendLayout();
             this.tabTalk.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -1733,6 +1738,7 @@
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader7});
+            this.lvUser.ContextMenuStrip = this.userContextMenu;
             this.lvUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvUser.FullRowSelect = true;
             this.lvUser.HideSelection = false;
@@ -1771,6 +1777,34 @@
             // 
             this.columnHeader7.Text = "Server";
             this.columnHeader7.Width = 100;
+            // 
+            // userContextMenu
+            // 
+            this.userContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmItemChangeServer,
+            this.toolStripSeparator1,
+            this.cmItemModifyPolicy});
+            this.userContextMenu.Name = "userContextMenu";
+            this.userContextMenu.Size = new System.Drawing.Size(153, 76);
+            // 
+            // cmItemChangeServer
+            // 
+            this.cmItemChangeServer.Name = "cmItemChangeServer";
+            this.cmItemChangeServer.Size = new System.Drawing.Size(136, 22);
+            this.cmItemChangeServer.Text = "切换服务器";
+            this.cmItemChangeServer.Click += new System.EventHandler(this.cmItemChangeServer_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
+            // 
+            // cmItemModifyPolicy
+            // 
+            this.cmItemModifyPolicy.Name = "cmItemModifyPolicy";
+            this.cmItemModifyPolicy.Size = new System.Drawing.Size(152, 22);
+            this.cmItemModifyPolicy.Text = "修改策略";
+            this.cmItemModifyPolicy.Click += new System.EventHandler(this.cmItemModifyPolicy_Click);
             // 
             // plUserControl
             // 
@@ -1858,6 +1892,7 @@
             this.Text = "数字识别服务";
             this.Shown += new System.EventHandler(this.ImgMainForm_Shown);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImgMainForm_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ImgMainForm_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -1906,6 +1941,7 @@
             this.groupBox2.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabUsers.ResumeLayout(false);
+            this.userContextMenu.ResumeLayout(false);
             this.tabTalk.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -2078,6 +2114,10 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.ContextMenuStrip userContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem cmItemChangeServer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem cmItemModifyPolicy;
 
     }
 }
