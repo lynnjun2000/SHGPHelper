@@ -909,6 +909,7 @@ namespace ImgServer
 
         private void ImgMainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _teamAdmin.StopCheckThread();
             _teamAdmin.logoutFromServer();
             this._threadStop = true;
             _priceCapThread.Join();

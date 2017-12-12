@@ -120,20 +120,85 @@ namespace ImgServer.Net
         private bool _logined = false;
 
         private Thread _PolicyBroadcastThread = null;
+        private Thread _userActiveCheckThread = null;
 
         public   const uint   LOGMSGID = 4001;
-        private bool _policyThreadStop;
+
+        /// <summary>
+        /// <UID,LastActiveTime>
+        /// </summary>
+        private Dictionary<string, DateTime> _onlineUserMap = null;
+        private Object _lockObj = null;
+        private AutoResetEvent _activeCheckWaitEvent = null;
+        private AutoResetEvent _policySyncWaitEvent = null;
 
 
         public UserAdmin( )
         {
-            _policyThreadStop = false;
+            _lockObj = new object();
+            _onlineUserMap = new Dictionary<string, DateTime>();
+            _policySyncWaitEvent = new AutoResetEvent(false);
+            _activeCheckWaitEvent = new AutoResetEvent(false);
+            _userActiveCheckThread = new Thread(ClearUnActiveUserInfo);
+            _userActiveCheckThread.Start();
         }
 
         public void bind( IInfomationControl  uiControl, IAppServer server)
         {
             _UIControl = uiControl;
             _server = server;
+        }
+
+        private void UpdateUserOnlineInfo(string uid)
+        {
+            lock (_lockObj)
+            {
+                _onlineUserMap[uid] = DateTime.Now;
+            }
+        }
+
+        private void ClearUnActiveUserInfo()
+        {
+            List<string> unActivedUserList = new List<string>();
+            while (true)
+            {
+                unActivedUserList.Clear();
+                lock (_lockObj)
+                {
+                    foreach (KeyValuePair<string, DateTime> kvp in _onlineUserMap)
+                    {
+                        if ((DateTime.Now-kvp.Value).TotalSeconds > 5){
+                            unActivedUserList.Add(kvp.Key);
+                        }
+                    }
+                    foreach (string uid in unActivedUserList)
+                    {
+                        _onlineUserMap.Remove(uid);
+                    }
+                }
+                foreach (string uid in unActivedUserList)
+                {
+                    UserPolicyData policyData = new UserPolicyData();
+                    policyData.UserID = uid;
+                    policyData.RemoveSelf = true;
+                    _UIControl.SyncUpdatePolicyList(ref policyData);
+                }
+                if (_activeCheckWaitEvent.WaitOne(1000 * 2))
+                {
+                    //收到信号退出当前线程
+                    return;
+                }
+            }
+        }
+
+        public void StopCheckThread()
+        {
+            if (_userActiveCheckThread != null)
+            {
+                _activeCheckWaitEvent.Set();
+                _userActiveCheckThread.Join();
+                _userActiveCheckThread = null;
+            }
         }
 
         public bool loginToServer(string userID)
@@ -143,15 +208,8 @@ namespace ImgServer.Net
             if (_PolicyBroadcastThread != null) return false;
             
             _PolicyBroadcastThread = new Thread( (obj)=>{
-                int loop = 0;
                 while (true)
                 {
-                    if (_policyThreadStop) return;
-                    if (loop++ % 2 != 0)
-                    {
-                        Thread.Sleep(500);
-                        continue;
-                    }
                     UserPolicyData policyData = new UserPolicyData();
                     policyData.UserID = obj as string;
                     _UIControl.SyncGetSelfPolicyData(ref policyData);
@@ -163,7 +221,12 @@ namespace ImgServer.Net
                     helper.WriteUserPolicyData2Msg(policyData);
                     msg.setMsgBody(helper.GetMsgBody());
                     _server.conBroadcast(msg, PacketHeader.ExpoDealType.InterGroup);
-                    Thread.Sleep(500);
+                    //Thread.Sleep(500);
+                    if (_policySyncWaitEvent.WaitOne(1000))
+                    {
+                        //收到信号退出当前线程
+                        return;
+                    }
                 }
                 
             });
@@ -177,10 +240,13 @@ namespace ImgServer.Net
         public void logoutFromServer()
         {
             if (!_logined) return;
-            _policyThreadStop = true;
-            _PolicyBroadcastThread.Join();
-            _PolicyBroadcastThread = null;
-            _policyThreadStop = false;
+            if (_PolicyBroadcastThread != null)
+            {
+                _policySyncWaitEvent.Set();
+                _PolicyBroadcastThread.Join();
+                _PolicyBroadcastThread = null;
+            }
+
             _logined = false;
         }
 
@@ -202,6 +268,21 @@ namespace ImgServer.Net
                 case LOGMSGID:
                     {
                         UserPolicyData policyData = new UserPolicyData(msg);
+                        if (!policyData.RemoveSelf)
+                        {
+                            UpdateUserOnlineInfo(policyData.UserID);
+                        }
+                        else
+                        {
+                            lock (_lockObj)
+                            {
+                                DateTime lastActiveTime;
+                                if (_onlineUserMap.TryGetValue(policyData.UserID, out lastActiveTime))
+                                {
+                                    _onlineUserMap.Remove(policyData.UserID);
+                                }
+                            }
+                        }
                         _UIControl.SyncUpdatePolicyList(ref policyData);
                         break;
                     }
