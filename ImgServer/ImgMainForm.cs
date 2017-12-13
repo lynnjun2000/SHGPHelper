@@ -1661,6 +1661,7 @@ namespace ImgServer
             UserPolicyData policyData = userData as UserPolicyData;
             if (policyData != null)
             {
+                policyData.CanRemoteControl = cbCanRemoteControl.Checked;
                 policyData.OfferTime = dtAutoBid.Value.Minute;
                 policyData.OfferTime += dtAutoBid.Value.Second / 100.0;
 
@@ -1712,6 +1713,33 @@ namespace ImgServer
             }
         }
 
+        private void setItemColor(ListViewItem item)
+        {
+            if (item.Tag == null) return;
+            try
+            {
+                int tagValue = Convert.ToInt32(item.Tag);
+                switch (tagValue)
+                {
+                    case 0:
+                        item.ForeColor = Color.Black;
+                        item.ToolTipText = "就是你自己";
+                        break;
+                    case 1:
+                        item.ForeColor = Color.Crimson;
+                        item.ToolTipText = "对方不接受远程控制";
+                        break;
+                    case 2:
+                        item.ForeColor = Color.Blue;
+                        item.ToolTipText = "可以远程调整策略";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch { }
+        }
+
         private void UpdatePolicyList(object userData)
         {
             UserPolicyData policyData = userData as UserPolicyData;
@@ -1742,6 +1770,19 @@ namespace ImgServer
                             item.SubItems[4].Text = policyData.Submit500.ToString();
                             item.SubItems[5].Text = policyData.SubmitForce.ToString();
                             item.SubItems[6].Text = policyData.ServerIP.ToString();
+                            if (item.Tag != null)
+                            {                                
+                                try
+                                {
+                                    int tagValue = Convert.ToInt32(item.Tag);
+                                    if (tagValue != 0)
+                                    {
+                                        item.Tag = !policyData.CanRemoteControl ? 1 : 2;
+                                    }
+                                }
+                                catch { }
+                            }
+                            setItemColor(item);
                             return;
                         }
                     }
@@ -1755,6 +1796,15 @@ namespace ImgServer
                     item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.Submit500.ToString()));
                     item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.SubmitForce.ToString()));
                     item1.SubItems.Add(new ListViewItem.ListViewSubItem(item1, policyData.ServerIP.ToString()));
+                    if (policyData.UserID.Equals(tbUser.Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        item1.Tag = 0;  //表示不能进行远程控制，本处表示该记录就是当前终端，所以没有必要进行修改
+                    }else{
+                        //item1.Tag 0,1都不能修改，只是0表示该条记录是自身，1表示该记录为其他终端，但是这些终端不接受远程控制，
+                        // 2表示这些远程终端接受远程控制
+                        item1.Tag = !policyData.CanRemoteControl ? 1 : 2;
+                    }
+                    setItemColor(item1);                    
                     lvUser.Items.Add(item1);
 
                 }
@@ -1774,7 +1824,24 @@ namespace ImgServer
             {
                 uid = lvUser.SelectedItems[0].Text;
             }
-            return true;
+            if (lvUser.SelectedItems[0].Tag == null) return false;
+            try
+            {
+                int tagValue = Convert.ToInt32(lvUser.SelectedItems[0].Tag);
+                if (tagValue >= 2)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }                
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
 
         #region IInfomationControl Members
@@ -1873,6 +1940,11 @@ namespace ImgServer
                 editForm.Show();
             }
             
+        }
+
+        private void lvUser_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+
         }
 
 

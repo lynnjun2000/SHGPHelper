@@ -196,6 +196,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button11 = new System.Windows.Forms.Button();
             this.WebControlLocationtimer = new System.Windows.Forms.Timer(this.components);
+            this.cbCanRemoteControl = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -452,6 +453,7 @@
             // 
             // tabMain
             // 
+            this.tabMain.Controls.Add(this.cbCanRemoteControl);
             this.tabMain.Controls.Add(this.btLogin);
             this.tabMain.Controls.Add(this.tbUser);
             this.tabMain.Controls.Add(this.label2);
@@ -482,7 +484,6 @@
             this.tbUser.Name = "tbUser";
             this.tbUser.Size = new System.Drawing.Size(76, 23);
             this.tbUser.TabIndex = 8;
-            this.tbUser.Text = "陈松";
             // 
             // label2
             // 
@@ -1744,10 +1745,12 @@
             this.lvUser.HideSelection = false;
             this.lvUser.Location = new System.Drawing.Point(3, 3);
             this.lvUser.Name = "lvUser";
+            this.lvUser.ShowItemToolTips = true;
             this.lvUser.Size = new System.Drawing.Size(466, 352);
             this.lvUser.TabIndex = 1;
             this.lvUser.UseCompatibleStateImageBehavior = false;
             this.lvUser.View = System.Windows.Forms.View.Details;
+            this.lvUser.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lvUser_DrawSubItem);
             // 
             // columnHeader1
             // 
@@ -1785,7 +1788,7 @@
             this.toolStripSeparator1,
             this.cmItemModifyPolicy});
             this.userContextMenu.Name = "userContextMenu";
-            this.userContextMenu.Size = new System.Drawing.Size(153, 76);
+            this.userContextMenu.Size = new System.Drawing.Size(137, 54);
             // 
             // cmItemChangeServer
             // 
@@ -1802,7 +1805,7 @@
             // cmItemModifyPolicy
             // 
             this.cmItemModifyPolicy.Name = "cmItemModifyPolicy";
-            this.cmItemModifyPolicy.Size = new System.Drawing.Size(152, 22);
+            this.cmItemModifyPolicy.Size = new System.Drawing.Size(136, 22);
             this.cmItemModifyPolicy.Text = "修改策略";
             this.cmItemModifyPolicy.Click += new System.EventHandler(this.cmItemModifyPolicy_Click);
             // 
@@ -1879,6 +1882,18 @@
             // WebControlLocationtimer
             // 
             this.WebControlLocationtimer.Tick += new System.EventHandler(this.WebControlLocationtimer_Tick);
+            // 
+            // cbCanRemoteControl
+            // 
+            this.cbCanRemoteControl.AutoSize = true;
+            this.cbCanRemoteControl.Checked = true;
+            this.cbCanRemoteControl.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCanRemoteControl.Location = new System.Drawing.Point(284, 66);
+            this.cbCanRemoteControl.Name = "cbCanRemoteControl";
+            this.cbCanRemoteControl.Size = new System.Drawing.Size(110, 18);
+            this.cbCanRemoteControl.TabIndex = 10;
+            this.cbCanRemoteControl.Text = "接受远程控制";
+            this.cbCanRemoteControl.UseVisualStyleBackColor = true;
             // 
             // ImgMainForm
             // 
@@ -2118,6 +2133,7 @@
         private System.Windows.Forms.ToolStripMenuItem cmItemChangeServer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem cmItemModifyPolicy;
+        private System.Windows.Forms.CheckBox cbCanRemoteControl;
 
     }
 }

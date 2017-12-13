@@ -38,22 +38,34 @@ namespace ImgServer.Net
 
         public virtual string ServerIP { get; set; }
         public virtual bool RemoveSelf { get; set; }
+        public virtual bool CanRemoteControl { get; set; }
 
         public UserPolicyData()
         {
             RemoveSelf = false;
+            CanRemoteControl = true;
         }
 
         public UserPolicyData(MessageV2ReaderHelper reader)
-        {            
-            UserID = reader.ReadStr();
-            OfferTime = reader.ReadDouble();
-            PriceMarkup = reader.ReadStr();
-            Submit400 = reader.ReadDouble();
-            Submit500 = reader.ReadDouble();
-            SubmitForce = reader.ReadDouble();
-            ServerIP = reader.ReadStr();
-            RemoveSelf = reader.ReadBool();
+        {
+            try
+            {
+                UserID = reader.ReadStr();
+                OfferTime = reader.ReadDouble();
+                PriceMarkup = reader.ReadStr();
+                Submit400 = reader.ReadDouble();
+                Submit500 = reader.ReadDouble();
+                SubmitForce = reader.ReadDouble();
+                ServerIP = reader.ReadStr();
+                RemoveSelf = reader.ReadBool();
+                CanRemoteControl = reader.ReadBool();
+            }
+            catch (Exception e)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("UserPolicyData反序列化失败，").Append(e.Message);
+                Console.WriteLine(sb.ToString());
+            }
         }
 
 
@@ -83,6 +95,7 @@ namespace ImgServer.Net
             helper.WriteDouble(policyData.SubmitForce);
             helper.WriteString(policyData.ServerIP);
             helper.WriteBool(policyData.RemoveSelf);
+            helper.WriteBool(policyData.CanRemoteControl);
         }
 
     }
