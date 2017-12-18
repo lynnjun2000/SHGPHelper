@@ -672,15 +672,16 @@ namespace ImgServer
         public void CapPriceAndAnalize()
         {
             if (_threadStop) return;
-            if (tbPriceCoord1.Text.Trim().Length == 0 || tbPriceCoord1.Text.Trim().Length == 0) return;
-            if (tbPriceCoord1.Text.Trim().Equals("0,0,0,0") || tbPriceCoord1.Text.Trim().Equals("0,0,0,0")) return;
-
-            string[] tmp1 = tbPriceCoord1.Text.Trim().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            if (tmp1.Length != 2) return;
-            string[] tmp2 = tbPriceCoord2.Text.Trim().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            if (tmp2.Length != 2) return;
             try
             {
+
+                if (tbPriceCoord1.Text.Trim().Length == 0 || tbPriceCoord1.Text.Trim().Length == 0) return;
+                if (tbPriceCoord1.Text.Trim().Equals("0,0,0,0") || tbPriceCoord1.Text.Trim().Equals("0,0,0,0")) return;
+                    
+                string[] tmp1 = tbPriceCoord1.Text.Trim().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                if (tmp1.Length != 2) return;
+                string[] tmp2 = tbPriceCoord2.Text.Trim().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                if (tmp2.Length != 2) return;
 
                 int left = Convert.ToInt32(tmp1[0]);
                 int top = Convert.ToInt32(tmp1[1]);
@@ -1658,26 +1659,55 @@ namespace ImgServer
         private void BuildUserPolicyData(object userData)
         {
             if (_disableUIFunc) return;
-            UserPolicyData policyData = userData as UserPolicyData;
-            if (policyData != null)
+            try
             {
-                policyData.CanRemoteControl = cbCanRemoteControl.Checked;
-                policyData.OfferTime = dtAutoBid.Value.Minute;
-                policyData.OfferTime += dtAutoBid.Value.Second / 100.0;
+                UserPolicyData policyData = userData as UserPolicyData;
+                if (policyData != null)
+                {
+                    policyData.CanRemoteControl = cbCanRemoteControl.Checked;
+                    policyData.OfferTime = dtAutoBid.Value.Minute;
+                    policyData.OfferTime += dtAutoBid.Value.Second / 100.0;
 
-                policyData.PriceMarkup = tbIncPrice.Text.Trim();
+                    policyData.PriceMarkup = tbIncPrice.Text.Trim();
 
-                policyData.Submit400 = dtAutoCommit400.Value.Second;
-                policyData.Submit400 += Convert.ToInt32(tbAutoCommitMS400.Text) / 1000.0;
+                    policyData.Submit400 = dtAutoCommit400.Value.Second;
+                    if (tbAutoCommitMS400.Text.Trim().Length > 0)
+                    {
+                        try
+                        {
+                            policyData.Submit400 += Convert.ToInt32(tbAutoCommitMS400.Text) / 1000.0;
+                        }
+                        catch { }
+                    }
 
-                policyData.Submit500 = dtAutoCommit500.Value.Second;
-                policyData.Submit500 += Convert.ToInt32(tbAutoCommitMS500.Text) / 1000.0;
+                    policyData.Submit500 = dtAutoCommit500.Value.Second;
+                    if (tbAutoCommitMS500.Text.Trim().Length > 0)
+                    {
+                        try
+                        {
+                            policyData.Submit500 += Convert.ToInt32(tbAutoCommitMS500.Text) / 1000.0;
+                        }
+                        catch { }
+                    }
 
-                policyData.SubmitForce = dtAutoCommit2.Value.Second;
-                policyData.SubmitForce += Convert.ToInt32(tbAutoCommitMS2.Text) / 1000.0;
+                    policyData.SubmitForce = dtAutoCommit2.Value.Second;
+                    if (tbAutoCommitMS2.Text.Trim().Length > 0)
+                    {
+                        try
+                        {
+                            policyData.SubmitForce += Convert.ToInt32(tbAutoCommitMS2.Text) / 1000.0;
+                        }
+                        catch { }
+                    }
 
-                policyData.ServerIP = tbServerIPInfo.Text.Trim();
+                    policyData.ServerIP = tbServerIPInfo.Text.Trim();
 
+                }
+                return;
+            }
+            catch 
+            {
+                return;
             }
         }
 
