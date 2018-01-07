@@ -11,7 +11,7 @@
   <ListenPort Port="9008"/>
   <!-- Broker主机地址列表 -->
   <BrokerGroups>
-    <Broker BrokerIp="23.106.155.234" />
+    <Broker BrokerIp="47.96.150.185" />
     <!--
 	  <Broker BrokerIp="192.168.1.202" />
     -->

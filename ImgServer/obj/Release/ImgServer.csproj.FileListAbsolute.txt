@@ -4,9 +4,7 @@ D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\ImgServer.exe
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\ImgServer.pdb
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\ImgGPLib.dll
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\log4net.dll
-D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\Wind.Comm.dll
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\ImgGPLib.pdb
-D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\Wind.Comm.xml
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ResolveAssemblyReference.cache
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.ImgMainForm.resources
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.Properties.Resources.resources
@@ -17,3 +15,4 @@ D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.csproj.G
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.exe
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.pdb
 D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\obj\Release\ImgServer.FormPolicyEdit.resources
+D:\workres\projects\GitHubGP\SHGPHelper\ImgServer\bin\Release\EBSCSharpClient.dll
